@@ -1,69 +1,6 @@
 
 from Wykres import Rysuj
-
-p
-
-def read_file(filepath):
-    with open(filepath, "r") as file:
-        data = dict()
-        alllines = file.readlines()[0:]
-        # czyta plik po czym czym przyporządkowuje pierwszą linijkę(z datami) do zmiennej daty
-        dates = alllines[0]
-        # pozbywa się znaku \n z końca linijki
-        dates = dates.rstrip("\n")
-        # rozdziela linikje na poszczególne daty
-        dates = dates.split(",")
-
-        # bierze linijki z danymi dla państw Unii
-        lines = alllines[4:]
-        for line in lines:
-            # zamienia przecinki wewnątrz cen na kropki
-            dotcomma = False
-            for i in range(0, len(line)):
-                if line[i] == '"':
-                    dotcomma = not dotcomma
-                if line[i] == ",":
-                    if dotcomma:
-                        line = line[:i] + '.' + line[i+1:]
-
-            line = line.rstrip("\n")
-            # pozbywa się niepotrzebnych cudzysłowów
-            line = line.replace('"', "")
-            line = line.replace(':', 'no data')
-
-            # rozdziela linijke na kolejne ceny na podstawie zewnętrznych przecinków
-            line = line.split(',')
-            name = line[0]
-            name = name.split()
-            name = name[0]
-
-            price = list()
-            # upakowuje kolejne ceny w wybranej linii(dla danego państwa) do listy
-            for i in range(1, len(line)):
-                if line[i] == "no data":
-                    price.append(line[i])
-                else:
-                    price.append(float(line[i]))
-
-            # prices = " ".join(price)
-            # prices.strip('" ')
-            # print(name)
-            # print(prices)
-
-            # ceny enrgii dla danego państwa przyporządkowuje odpowiednim data i wkłada do słownika z nazwą
-            # państwa jako kluczem
-            count = 1
-            data[name] = dict()
-            for p in price:
-                # print(count,end="- ")
-                datetime = dates[count]
-                # print(datetime, end= "- ")
-                # print(p)
-                data[name][datetime] = p
-                count += 1
-
-    return data
-
+from CzytnikPliku import Czytnik
 
 class Kraj:
     def __init__(self, country_name, dane_ceny):
@@ -93,8 +30,10 @@ class Kraj:
 
 
 if __name__ == '__main__':
-    dane = read_file(
-        'Electricity prices for household consumers - bi-annual data (from 2007 onwards) [NRG_PC_204].csv')
+    NowyCzytnik = Czytnik()
+
+    sciezka = input("sciezka")
+    dane = NowyCzytnik.read_file(sciezka)
     print(dane)
 
     Belgium = Kraj("Belgium", dane)
@@ -122,13 +61,17 @@ if __name__ == '__main__':
     Bosnia = Kraj("Bosnia", dane)
     print(Bosnia)
 
-    Rysownik = Rysuj()
+
     lista = list()
     lista.append(Belgium)
     lista.append(Bosnia)
     lista.append(Kosovo)
     lista.append(Ireland)
     lista.append(Spain)
-    Rysownik.wykres(lista,"2009-S2",'2013-S2')
+
+    Rysownik = Rysuj()
+    start_date = input("data początkową")
+    end_date = input("data konca ")
+    Rysownik.wykres(lista,start_date,end_date)
 
 
