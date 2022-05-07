@@ -31,7 +31,7 @@ class Rysuj:
                 if check == True:
                     dates.append(date)
                     costs.append(cost)
-
+p
             lgd.append(kraj.get_name())
 
             alldates[kraj] =dates
