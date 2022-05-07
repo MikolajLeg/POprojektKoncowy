@@ -1,5 +1,5 @@
 
-from matplotlib import pyplot as plt
+from Wykres import Rysuj
 
 
 
@@ -29,6 +29,7 @@ def read_file(filepath):
             line = line.rstrip("\n")
             # pozbywa się niepotrzebnych cudzysłowów
             line = line.replace('"', "")
+            line = line.replace(':', 'no data')
 
             # rozdziela linijke na kolejne ceny na podstawie zewnętrznych przecinków
             line = line.split(',')
@@ -39,7 +40,10 @@ def read_file(filepath):
             price = list()
             # upakowuje kolejne ceny w wybranej linii(dla danego państwa) do listy
             for i in range(1, len(line)):
-                price.append(line[i])
+                if line[i] == "no data":
+                    price.append(line[i])
+                else:
+                    price.append(float(line[i]))
 
             # prices = " ".join(price)
             # prices.strip('" ')
@@ -79,36 +83,13 @@ class Kraj:
     def get_dates_and_cost(self):
         return self.__ceny
 
+    def get_name(self):
+        return self.__name
+
     def __repr__(self):
         nazwa = self.__class__.__name__
         atrybuty = {k.split("__")[-1]: v for k, v in self.__dict__.items()}
         return f"{nazwa}: {atrybuty} "
-
-
-class Rysuj:
-
-    def __init__(self):
-        pass
-
-    def wykres(self,Kraje,start_date,end_date):
-        dates = list()
-        costs = list()
-        for kraj in Kraje:
-            check = False
-            for date,cost in kraj.get_dates_and_cost().items():
-                if date == start_date:
-                    check = not check
-                if date == end_date:
-                    check = not check
-                if check == True:
-                    dates.append(date)
-                    costs.append(cost)
-            plt.plot(dates,costs)
-        plt.xlabel("data")
-        plt.ylabel("koszt")
-        plt.title("Koszta energii w danym kraju")
-        #lgd = plt.legend()
-        plt.show()
 
 
 if __name__ == '__main__':
@@ -135,16 +116,19 @@ if __name__ == '__main__':
     Spain = Kraj("Spain", dane)
     print(Spain)
 
-    kos = Kraj("Kosovo", dane)
-    print(kos)
+    Kosovo = Kraj("Kosovo", dane)
+    print(Kosovo)
 
     Bosnia = Kraj("Bosnia", dane)
     print(Bosnia)
 
     Rysownik = Rysuj()
     lista = list()
-    #lista.append(Belgium)
+    lista.append(Belgium)
     lista.append(Bosnia)
-    Rysownik.wykres(lista,"2009-S2",'2011-S2')
+    lista.append(Kosovo)
+    lista.append(Ireland)
+    lista.append(Spain)
+    Rysownik.wykres(lista,"2009-S2",'2013-S2')
 
 
