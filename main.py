@@ -84,16 +84,24 @@ class Kraj:
         return f"{nazwa}: {atrybuty} "
 
 
-    # class Rysuj:
-    #
-    #     def __init__(self):
-    #         pass
-    #
-    #     def wykres(self,Kraje,start_date,end_date):
-    #         dates = list()
-    #         countries = list()
-    #         for kraj in Kraje:
-    #             dates = kraj.
+    class Rysuj:
+
+        def __init__(self):
+            pass
+
+        def wykres(self,Kraje,start_date,end_date):
+            dates = list()
+            costs = list()
+            for kraj in Kraje:
+                for date,cost in kraj.get_dates_and_cost():
+                    dates.append(date)
+                    costs.append(cost)
+                plt.plot(dates,costs)
+            plt.xlabel("organ przyjmujacy")
+            plt.ylabel("liczba wnioskow")
+            plt.title("Liczba wnioskow o zrzeczenie obywatelstwa")
+            #lgd = plt.legend()
+            plt.show()
 
 
 if __name__ == '__main__':
@@ -126,8 +134,6 @@ if __name__ == '__main__':
     Bosnia = Kraj("Bosnia", dane)
     print(Bosnia)
 
-    plt.xlabel("organ przyjmujacy")
-    plt.ylabel("liczba wnioskow")
-    plt.title("Liczba wnioskow o zrzeczenie obywatelstwa")
-    lgd = plt.legend()
-    plt.show()
+
+
+
