@@ -1,5 +1,4 @@
 
-from Wykres import Rysuj
 from CzytnikPliku import Czytnik
 from Panstwo import Kraj
 from GlowneOkno import MainWindow
