@@ -3,7 +3,7 @@ from CzytnikPliku import Czytnik
 from Panstwo import Kraj
 from GlowneOkno import MainWindow
 from PyQt5.QtWidgets import QApplication
-
+print("test")
 
 if __name__ == '__main__':
     NowyCzytnik = Czytnik()
