@@ -23,7 +23,7 @@ class MainWindow(QMainWindow):
         group_box.setLayout(self.__layout)
         #Mainuje group_boxa cntralnym wigdetem wysweitlanego okna, bez tego gruop_box nie bedzie wyswietlony
         self.setCentralWidget(group_box)
-        self.show()
+        #self.show()
 
     def prepare_chart(self,lista,start_date,end_date):
         self.__chart = Rysuj(lista,start_date,end_date)
