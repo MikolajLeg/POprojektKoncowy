@@ -8,8 +8,8 @@ from PyQt5.QtWidgets import QApplication
 if __name__ == '__main__':
     NowyCzytnik = Czytnik()
 
-    sciezka = input("sciezka")
-    #sciezka = 'Electricity prices for household consumers - bi-annual data (from 2007 onwards) [NRG_PC_204].csv'
+    #sciezka = input("sciezka")
+    sciezka = 'Electricity prices for household consumers - bi-annual data (from 2007 onwards) [NRG_PC_204].csv'
 
     dane = NowyCzytnik.read_file(sciezka)
     print(dane)
@@ -39,17 +39,24 @@ if __name__ == '__main__':
     Bosnia = Kraj("Bosnia", dane)
     print(Bosnia)
 
+    Poland = Kraj("Poland",dane)
+    print(Poland)
+
+
+
+
     lista = list()
     lista.append(Belgium)
     lista.append(Bosnia)
     lista.append(Kosovo)
     lista.append(Ireland)
     lista.append(Spain)
-
-    start_date = input("data początkową")
-    end_date = input("data konca ")
-    # start_date = '2009-S2'
-    # end_date = '2015-S2'
+    lista.append(Poland)
+    #
+    # start_date = input("data początkową")
+    # end_date = input("data konca ")
+    start_date = '2009-S2'
+    end_date = '2015-S2'
 
 
     app = QApplication([])

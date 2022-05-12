@@ -3,6 +3,7 @@ class Kraj:
         self.__name = country_name
         self.__ceny = dict()
         self.__add_data(dane_ceny)
+        self.__status = False
 
     def __add_data(self, dictionary):
         for name, item in dictionary.items():
@@ -16,6 +17,9 @@ class Kraj:
 
     def get_name(self):
         return self.__name
+
+    def flip_status(self):
+        self.__status = not self.__status
 
     def __repr__(self):
         nazwa = self.__class__.__name__

@@ -46,11 +46,6 @@ class Czytnik:
                     else:
                         price.append(float(line[i]))
 
-                # prices = " ".join(price)
-                # prices.strip('" ')
-                # print(name)
-                # print(prices)
-
                 # ceny enrgii dla danego państwa przyporządkowuje odpowiednim data i wkłada do słownika z nazwą
                 # państwa jako kluczem
                 count = 1

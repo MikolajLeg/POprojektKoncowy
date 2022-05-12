@@ -17,12 +17,12 @@ class Rysuj(FigureCanvasQTAgg):
         #ustawia osie układu wspólrzęnych oraz tytuł dla stworzonej figury
         self.__fig.add_subplot()
         self.__fig.suptitle(f"Ceney energii dla państw Unii Europejskiej w latach {start_date} - {end_date}")
-        self.wykres(Kraje,start_date,end_date)
+        self.__wykres(Kraje,start_date,end_date)
         self.__fig.tight_layout()
 
 
 
-    def wykres(self,Kraje,start_date,end_date):
+    def __wykres(self,Kraje,start_date,end_date):
         alldates = dict()
         allcosts = dict()
         lgd =list()
