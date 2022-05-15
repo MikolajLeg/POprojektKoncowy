@@ -57,7 +57,7 @@ class Rysuj(FigureCanvasQTAgg):
 
         # rysuje wykres zależnosci cen od dat dla kolejnych państw
         for kraj in Kraje:
-            ax.plot(alldates[kraj],allcosts[kraj])
+            ax.plot(alldates[kraj],allcosts[kraj],"--*")
         minimum = minimum.__round__(2)
         maximum = maximum.__round__(2)
 

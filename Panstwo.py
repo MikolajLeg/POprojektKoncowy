@@ -21,6 +21,9 @@ class Kraj:
     def flip_status(self):
         self.__status = not self.__status
 
+    def get_status(self):
+        return self.__status
+
     def __repr__(self):
         nazwa = self.__class__.__name__
         atrybuty = {k.split("__")[-1]: v for k, v in self.__dict__.items()}
