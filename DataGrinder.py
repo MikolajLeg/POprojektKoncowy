@@ -2,19 +2,19 @@
 from CzytnikPliku import Czytnik
 from Panstwo import Kraj
 
+
 class DataGrinder:
-    def __init__(self,sciezka):
+    def __init__(self, sciezka):
 
         NowyCzytnik = Czytnik()
-        self.__sciezka =sciezka
+        self.__sciezka = sciezka
         self.__lista = list()
         self.__dane = NowyCzytnik.read_file(self.__sciezka)
         self.__make_list()
 
-
     def __make_list(self):
         Belgium = Kraj("Belgium", self.__dane)
-        Czechia = Kraj("Czechia",self.__dane)
+        Czechia = Kraj("Czechia", self.__dane)
         Germany = Kraj("Germany", self.__dane)
         Ireland = Kraj("Ireland", self.__dane)
         Spain = Kraj("Spain", self.__dane)

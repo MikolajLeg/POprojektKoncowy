@@ -1,20 +1,21 @@
 
 from PyQt5.QtWidgets import QPushButton, QLineEdit
 
+
 class CountryButton(QPushButton):
-    def __init__(self,Kraj,Okno):
+    def __init__(self, Kraj, Okno):
         super().__init__(Kraj.get_name())
         self.__kraj = Kraj
         self.__okno = Okno
         self.clicked.connect(self.__status)
         self.__check_color()
 
-# zmieniana status kraju, na podstawie tego statusu program bedzie potem decydowac czy umiescic dany kraj na wykresie czy nie, ale to trzeba będzie potem dopisac dopiero
+# zmieniana status kraju, na podstawie statusu program bedzie potem decydowac czy umiescic dany kraj na wykresie czy nie
     def __status(self):
         self.__kraj.flip_status()
-        #zmina koloru aby pokazac czy kraj bedzie uwzgleniony na wykresie/mapie
+        # zmina koloru aby pokazac czy kraj bedzie uwzgleniony na wykresie/mapie
         self.__check_color()
-        #odswiezenie widoku glownego okna
+        # odswiezenie widoku glownego okna
         self.__okno.refresh_view()
 
     def __check_color(self):
@@ -26,7 +27,7 @@ class CountryButton(QPushButton):
 
 
 class ChoiceButton(QPushButton):
-    def __init__(self,nazwa,Okno):
+    def __init__(self, nazwa, Okno):
         super().__init__(nazwa)
         self.__nazwa = nazwa
         self.__okno = Okno
@@ -36,29 +37,26 @@ class ChoiceButton(QPushButton):
         else:
             self.setStyleSheet("background-color: light gray")
 
-
     def wybor(self):
         self.__okno.set_view(self.__nazwa)
         self.__okno.refresh_view()
 
+
 class PathButton(QLineEdit):
-    def __init__(self,Okno):
+    def __init__(self):
         super().__init__()
 
     def get_tekst(self):
         return self.text()
+
 
 class AddPatchButton(QPushButton):
     def __init__(self, nazwa, Okno, inputer):
         super().__init__(nazwa)
         self.__okno = Okno
         self.__inputer = inputer
-        self.clicked.connect(self.set_Path)
+        self.clicked.connect(self.set_new_path)
 
-
-    def set_Path(self):
+    def set_new_path(self):
         self.__sciezka = self.__inputer.get_tekst()
         self.__okno.set_path(self.__sciezka)
-
-
-
