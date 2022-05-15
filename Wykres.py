@@ -52,7 +52,7 @@ class Rysuj(FigureCanvasQTAgg):
 
             lgd.append(kraj.get_name())
 
-            alldates[kraj] =dates
+            alldates[kraj] = dates
             allcosts[kraj] = costs
 
         # rysuje wykres zależnosci cen od dat dla kolejnych państw
@@ -61,7 +61,7 @@ class Rysuj(FigureCanvasQTAgg):
         minimum = minimum.__round__(2)
         maximum = maximum.__round__(2)
 
-        ax.set_yticks(np.arange(minimum,maximum,0.1))
+        ax.set_yticks(np.arange(minimum,maximum,0.05))
         ax.set_xlabel("data")
         ax.set_ylabel("koszt")
         ax.grid()
