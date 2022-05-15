@@ -3,13 +3,13 @@ from CzytnikPliku import Czytnik
 from Panstwo import Kraj
 from GlowneOkno import MainWindow
 from PyQt5.QtWidgets import QApplication
-print("test")
+
 
 if __name__ == '__main__':
     NowyCzytnik = Czytnik()
 
-    sciezka = input("sciezka")
-    #sciezka = 'Electricity prices for household consumers - bi-annual data (from 2007 onwards) [NRG_PC_204].csv'
+    # sciezka = input("sciezka")
+    sciezka = 'Electricity prices for household consumers - bi-annual data (from 2007 onwards) [NRG_PC_204].csv'
 
     dane = NowyCzytnik.read_file(sciezka)
     print(dane)
@@ -46,10 +46,10 @@ if __name__ == '__main__':
     lista.append(Ireland)
     lista.append(Spain)
 
-    start_date = input("data początkową")
-    end_date = input("data konca ")
-    # start_date = '2009-S2'
-    # end_date = '2015-S2'
+    # start_date = input("data początkową")
+    # end_date = input("data konca ")
+    start_date = '2009-S2'
+    end_date = '2015-S2'
 
 
     app = QApplication([])

@@ -9,7 +9,7 @@ class MainWindow(QMainWindow):
     def __init__(self,lista,start_date,end_date):
         super().__init__()
 
-        self.resize(1000,500)
+        self.resize(1500,1000)
         self.__init_view()
         self.prepare_chart(lista,start_date,end_date)
 
