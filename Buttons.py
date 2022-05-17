@@ -21,7 +21,7 @@ class CountryButton(QPushButton):
     def __check_color(self):
 
         if self.__kraj.get_status():
-            self.setStyleSheet("background-color: yellow")
+            self.setStyleSheet("background-color: grey")
         else:
             self.setStyleSheet("background-color: light gray")
 
@@ -33,7 +33,7 @@ class ChoiceButton(QPushButton):
         self.__okno = Okno
         self.clicked.connect(self.wybor)
         if self.__okno.get_view() == self.__nazwa:
-            self.setStyleSheet("background-color: yellow")
+            self.setStyleSheet("background-color: grey")
         else:
             self.setStyleSheet("background-color: light gray")
 

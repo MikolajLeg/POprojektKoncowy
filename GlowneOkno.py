@@ -1,8 +1,10 @@
 from Panstwo import CountryCreator
-from DataGrinder import DataGrinder , ListOfObjectsCreator
+from DataGrinder import ListOfObjectsCreator
 from Wykres import Rysuj
 from Buttons import CountryButton, ChoiceButton, PathButton, AddPatchButton
 from PyQt5.QtWidgets import QMainWindow, QVBoxLayout, QGroupBox, QWidget, QGridLayout, QPushButton, QTabWidget
+from CzytnikPliku import Czytnik
+from Slider import Slider
 
 
 class MainWindow(QMainWindow):
@@ -77,7 +79,7 @@ class MainWindow(QMainWindow):
         self.__layout.addWidget(self.__inputer, 0, 20, 2, 6)
         self.__layout.addWidget(AddPatchButton("Dodaj Plik", self, self.__inputer), 0, 26, 2, 2)
         self.__layout.addWidget(QPushButton("Daty"), 16, 0, 2, 2)
-        self.__layout.addWidget(QPushButton("suwak"), 16, 2, 2, 18)
+        self.__layout.addWidget(Slider(self.__list), 16, 2, 2, 18)
         self.__layout.addWidget(QPushButton("PDF/JPG"), 16, 20, 2, 2)
 
 
@@ -101,8 +103,8 @@ class MainWindow(QMainWindow):
 
     def __change_data(self):
 
-        Grinder = DataGrinder(self.__sciezka)
-        dane = Grinder.get_dane()
-        ListCreator = ListOfObjectsCreator(dane,CountryCreator())
+        NowyCzytnik = Czytnik()
+        dane = NowyCzytnik.read_file(self.__sciezka)
+        ListCreator = ListOfObjectsCreator(dane, CountryCreator())
         self.__list = ListCreator.get_list()
         self.refresh_view()

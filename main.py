@@ -3,7 +3,7 @@
 from GlowneOkno import MainWindow
 from PyQt5.QtWidgets import QApplication
 
-print("test Ernest")
+
 if __name__ == '__main__':
 
     # start_date = input("data początkową")
