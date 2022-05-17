@@ -1,19 +1,4 @@
 
-from CzytnikPliku import Czytnik
-
-
-
-class DataGrinder:
-    def __init__(self, sciezka):
-
-        # tworzy czytnik ktory bedzie służył do odczytywania danych
-        NowyCzytnik = Czytnik()
-        self.__sciezka = sciezka
-        self.__dane = NowyCzytnik.read_file(self.__sciezka)
-
-    def get_dane(self):
-        return self.__dane
-
 
 # wzorzec wytworzczy do tworzenia listy obiektow na podstawie podanych danych
 class ListOfObjectsCreator:

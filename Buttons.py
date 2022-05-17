@@ -60,3 +60,22 @@ class AddPatchButton(QPushButton):
     def set_new_path(self):
         self.__sciezka = self.__inputer.get_tekst()
         self.__okno.set_path(self.__sciezka)
+
+
+class Display(QLineEdit):
+    def __init__(self):
+        super().__init__()
+        self.setReadOnly(True)
+
+
+
+class CountryDisplay(Display):
+    def __init__(self):
+        super().__init__()
+
+
+class ErrorDisplay(Display):
+    def __init__(self):
+        super().__init__()
+        self.setStyleSheet("color: red")
+
