@@ -4,7 +4,7 @@ class Czytnik:
     def __init__(self):
         pass
 
-    def read_file(self,filepath):
+    def read_file(self, filepath):
         with open(filepath, "r") as file:
             data = dict()
             alllines = file.readlines()[0:]
@@ -35,7 +35,7 @@ class Czytnik:
                 # rozdziela linijke na kolejne ceny na podstawie zewnętrznych przecinków
                 line = line.split(',')
                 name = line[0]
-                name = name.split()
+                name = name.split("(")
                 name = name[0]
 
                 price = list()
@@ -45,11 +45,6 @@ class Czytnik:
                         price.append(line[i])
                     else:
                         price.append(float(line[i]))
-
-                # prices = " ".join(price)
-                # prices.strip('" ')
-                # print(name)
-                # print(prices)
 
                 # ceny enrgii dla danego państwa przyporządkowuje odpowiednim data i wkłada do słownika z nazwą
                 # państwa jako kluczem
