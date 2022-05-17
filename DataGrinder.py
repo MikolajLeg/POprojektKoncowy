@@ -1,35 +1,34 @@
 
 from CzytnikPliku import Czytnik
-from Panstwo import Kraj
+
 
 
 class DataGrinder:
     def __init__(self, sciezka):
 
+        # tworzy czytnik ktory bedzie służył do odczytywania danych
         NowyCzytnik = Czytnik()
         self.__sciezka = sciezka
-        self.__lista = list()
         self.__dane = NowyCzytnik.read_file(self.__sciezka)
+
+    def get_dane(self):
+        return self.__dane
+
+
+# wzorzec wytworzczy do tworzenia listy obiektow na podstawie podanych danych
+class ListOfObjectsCreator:
+    def __init__(self, dane, ObjectCreator):
+        self.__dane = dane
+        self.__lista = list()
+        self.__Creator = ObjectCreator
         self.__make_list()
 
-    def __make_list(self):
-        Belgium = Kraj("Belgium", self.__dane)
-        Czechia = Kraj("Czechia", self.__dane)
-        Germany = Kraj("Germany", self.__dane)
-        Ireland = Kraj("Ireland", self.__dane)
-        Spain = Kraj("Spain", self.__dane)
-        Kosovo = Kraj("Kosovo", self.__dane)
-        Bosnia = Kraj("Bosnia", self.__dane)
-        Poland = Kraj("Poland", self.__dane)
 
-        self.__lista.append(Belgium)
-        self.__lista.append(Bosnia)
-        self.__lista.append(Kosovo)
-        self.__lista.append(Ireland)
-        self.__lista.append(Spain)
-        self.__lista.append(Poland)
-        self.__lista.append(Czechia)
-        self.__lista.append(Germany)
+    def __make_list(self):
+        for k in self.__dane.keys():
+            self.__lista.append(self.__Creator.make_object(k, self.__dane))
+
 
     def get_list(self):
         return self.__lista
+

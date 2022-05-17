@@ -35,7 +35,7 @@ class Czytnik:
                 # rozdziela linijke na kolejne ceny na podstawie zewnętrznych przecinków
                 line = line.split(',')
                 name = line[0]
-                name = name.split()
+                name = name.split("(")
                 name = name[0]
 
                 price = list()
