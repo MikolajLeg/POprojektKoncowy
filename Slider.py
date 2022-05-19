@@ -39,9 +39,10 @@ class Slider(QWidget):
         self.slider_2.setMinimum(0)
         self.slider_2.setMaximum(length)
         self.slider_2.setSliderPosition(length)
+        self.__set_start_date()
 
-        self.slider_2.valueChanged.connect(self.ValueCheck)
-        self.slider_1.valueChanged.connect(self.ValueCheck)
+        self.slider_2.valueChanged.connect(self.ValueCheck_2)
+        self.slider_1.valueChanged.connect(self.ValueCheck_1)
 
 
         vbox = QVBoxLayout()
@@ -52,10 +53,15 @@ class Slider(QWidget):
         return groupBox
 
 
-    def ValueCheck(self):
+    def ValueCheck_1(self):
 
         if self.slider_1.sliderPosition() > self.slider_2.sliderPosition():
             self.slider_2.setSliderPosition(self.slider_1.sliderPosition())
+
+    def ValueCheck_2(self):
+
+        if self.slider_2.sliderPosition() < self.slider_1.sliderPosition():
+            self.slider_1.setSliderPosition(self.slider_2.sliderPosition())
 
 
     def __set_start_date(self):

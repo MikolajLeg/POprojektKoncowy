@@ -32,14 +32,18 @@ class ChoiceButton(QPushButton):
         self.__nazwa = nazwa
         self.__okno = Okno
         self.clicked.connect(self.wybor)
+
+
+    def wybor(self):
+        self.__okno.set_view(self.__nazwa)
+        self.check_color()
+        self.__okno.refresh_view()
+
+    def check_color(self):
         if self.__okno.get_view() == self.__nazwa:
             self.setStyleSheet("background-color: yellow")
         else:
             self.setStyleSheet("background-color: light gray")
-
-    def wybor(self):
-        self.__okno.set_view(self.__nazwa)
-        self.__okno.refresh_view()
 
 
 class PathButton(QLineEdit):

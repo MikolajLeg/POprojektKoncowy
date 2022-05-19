@@ -20,6 +20,8 @@ class MainWindow(QMainWindow):
         self.__inputer = None
         self.__start_date = None
         self.__end_date = None
+        self.__map_button = ChoiceButton("Mapa", self)
+        self.__chart_button = ChoiceButton("Wykres", self)
 
         self.resize(1500, 1000)
         self.__init_view()
@@ -73,8 +75,8 @@ class MainWindow(QMainWindow):
          self.__layout.addWidget(self.__error_disp, 16, 2, 1, 10)
          self.__layout.addWidget(self.__chart, 2, 0, 14, 22)
          self.__layout.addWidget(self.tab2, 2, 22, 16, 6)
-         self.__layout.addWidget(ChoiceButton("Mapa", self), 0, 0, 2, 10)
-         self.__layout.addWidget(ChoiceButton("Wykres", self), 0, 10, 2, 10)
+         self.__layout.addWidget(self.__map_button, 0, 0, 2, 10)
+         self.__layout.addWidget(self.__chart_button, 0, 10, 2, 10)
          self.__inputer = PathButton()
          self.__layout.addWidget(self.__inputer, 0, 20, 2, 6)
          self.__layout.addWidget(AddPatchButton("Dodaj Plik", self, self.__inputer), 0, 26, 2, 2)
@@ -100,9 +102,9 @@ class MainWindow(QMainWindow):
             self.tab1.setStyleSheet("border: 1px solid red")
             self.__chart = self.tab1
 
-
+        self.__chart_button.check_color()
+        self.__map_button.check_color()
         self.__layout.addWidget(self.__chart, 2, 0, 14, 22)
-
 
 
     def set_view(self, nazwa):
@@ -126,11 +128,9 @@ class MainWindow(QMainWindow):
 
     def set_start_date(self,start_date):
         self.__start_date = start_date
-        print(self.__start_date)
 
     def set_end_date(self,end_date):
         self.__end_date = end_date
-        print(self.__end_date)
 
 
 

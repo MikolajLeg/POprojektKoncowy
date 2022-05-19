@@ -13,6 +13,9 @@ class Rysuj(FigureCanvasQTAgg):
         self.__fig = Figure()
         super().__init__(self.__fig)
         self.__init_figure(kraje, start_date, end_date)
+        self.__maximum = 0
+        self.__minimum = 1
+
 
     def __init_figure(self, Kraje, start_date, end_date):
         # ustawia osie układu wspólrzęnych oraz tytuł dla stworzonej figury
@@ -40,25 +43,43 @@ class Rysuj(FigureCanvasQTAgg):
             costs = list()
             check = False
             for date, cost in kraj.get_dates_and_cost().items():
-                if date == start_date:
-                    check = not check
-                elif date == end_date:
-                    check = not check
-                if cost == 'no data':
-                    continue
-                if cost < minimum:
-                    minimum = cost
-                if cost > maximum:
-                    maximum = cost
+                if start_date == end_date:
+                    if start_date == date:
+                        dates.append(date)
+                        costs.append(cost)
+                        if cost < minimum:
+                            minimum = cost
+                        if cost > maximum:
+                            maximum = cost
+                        break
+                    else:
+                        continue
+                else:
+                    if date == start_date:
+                        check = not check
 
-                if check:
-                    dates.append(date)
-                    costs.append(cost)
+                    if cost == 'no data':
+                        dates.append(date)
+                        costs.append(None)
+                        continue
+                    if cost < minimum:
+                        minimum = cost
+                    if cost > maximum:
+                        maximum = cost
+
+                    if check:
+                        dates.append(date)
+                        costs.append(cost)
+
+                    if date == end_date:
+                        check = not check
 
             lgd.append(kraj.get_name())
 
-            alldates[kraj] = dates
-            allcosts[kraj] = costs
+            alldates[kraj.get_name()] = dates
+            allcosts[kraj.get_name()] = costs
+
+
 
         # rysuje wykres zależnosci cen od dat dla kolejnych państw
         for kraj in alldates.keys():
@@ -69,10 +90,19 @@ class Rysuj(FigureCanvasQTAgg):
         if count <7 :
             self.__disp.clear()
 
-        ax.set_yticks(np.arange(minimum, maximum, 0.1))
+        ax.set_yticks(np.arange(minimum,maximum, 0.05))
         ax.set_xlabel("data")
         ax.set_ylabel("koszt")
         ax.grid()
         ax.legend(lgd)
+
+    def check_min_max(self, cost):
+
+        if cost < self.__minimum:
+            self.__minimum = cost
+        if cost > self.__maximum:
+            self.__maximum = cost
+
+
 
 
