@@ -2,7 +2,7 @@ from Panstwo import CountryCreator
 from DataGrinder import ListOfObjectsCreator
 from Wykres import Rysuj
 from Buttons import CountryButton, ChoiceButton, PathButton, AddPatchButton
-from PyQt5.QtWidgets import QMainWindow, QVBoxLayout, QGroupBox, QWidget, QGridLayout, QPushButton, QTabWidget
+from PyQt5.QtWidgets import QMainWindow, QFormLayout, QVBoxLayout, QScrollArea, QGroupBox, QWidget, QGridLayout, QPushButton, QTabWidget
 from CzytnikPliku import Czytnik
 from Slider import Slider
 
@@ -43,7 +43,17 @@ class MainWindow(QMainWindow):
         self.tab2.layout = QVBoxLayout()
         for kraj in self.__list:
             self.tab2.layout.addWidget(CountryButton(kraj, self))
-        self.tab2.setLayout(self.tab2.layout)
+        formLayout = QFormLayout()
+        groupbox = QGroupBox("Country list")
+        groupbox.setLayout(self.tab2.layout)
+        scroll = QScrollArea()
+        scroll.setWidget(groupbox)
+        scroll.setWidgetResizable(True)
+
+
+        Layout = QVBoxLayout()
+        Layout.addWidget(scroll)
+        self.tab2.setLayout(Layout)
 
     def refresh_view(self):
         self.prep_lista()
