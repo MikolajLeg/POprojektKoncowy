@@ -19,6 +19,7 @@ class ChartMaker(FigureCanvasQTAgg):
         self.__disp = disp
         # ustala pole self.__fig jako figure
         self.__fig = Figure()
+        self.__num_of_dates = 0
 
         super().__init__(self.__fig)
         self.__init_figure()
@@ -43,6 +44,19 @@ class ChartMaker(FigureCanvasQTAgg):
 
         # ustawia opis osi y (kosztow)
         ax.set_yticks(np.arange(self.__minimum, self.__maximum, 0.05))
+        if self.__num_of_dates > 15:
+            mulitiply = np.ceil(self.__num_of_dates/15)
+            tick_dates = list()
+
+            for dates in self.__all_dates.values():
+                #print(self.__all_dates.values())
+
+                for num in range(len(dates)):
+                    if num % mulitiply  ==0 :
+                        print("tes")
+                        tick_dates.append(dates[num])
+            ax.set_xticks(tick_dates)
+
         ax.set_xlabel("data")
         ax.set_ylabel("koszt")
         ax.grid()
@@ -59,16 +73,16 @@ class ChartMaker(FigureCanvasQTAgg):
             dates = list()
             costs = list()
             check = False
-            for date, cost in kraj.get_dates_and_cost().items():
-                if self.__start_date == self.__end_date:
-                    if self.__start_date == date:
-                        dates.append(date)
-                        costs.append(cost)
-                        self.__check_min_max(cost)
-                        break
-                    else:
-                        continue
-                else:
+
+            if self.__start_date == self.__end_date:
+                cost = kraj.get_dates_and_cost().get(self.__start_date)
+                dates.append(self.__start_date)
+                costs.append(cost)
+                self.__check_min_max(cost)
+
+            else:
+                for date, cost in kraj.get_dates_and_cost().items():
+
                     if date == self.__start_date:
                         check = not check
 
@@ -88,9 +102,10 @@ class ChartMaker(FigureCanvasQTAgg):
             self.__lgd.append(kraj.get_name())
             self.__all_dates[kraj.get_name()] = dates
             self.__all_costs[kraj.get_name()] = costs
+            self.__num_of_dates = len(dates)
 
-        if count < 7:
-            self.__disp.clear()
+            if count < 7:
+                self.__disp.clear()
 
     def __check_min_max(self, cost):
         if cost < self.__minimum:

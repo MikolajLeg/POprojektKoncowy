@@ -2,7 +2,7 @@ from Panstwo import CountryCreator
 from ListOfObjectsCreator import ListOfObjectsCreator
 from Wykres import ChartMaker
 from Buttons import CountryButton, ChoiceButton, PathButton, AddPatchButton, ErrorDisplay, CountryDisplay
-from PyQt5.QtWidgets import QMainWindow, QVBoxLayout, QGroupBox, QWidget, QGridLayout, QPushButton, QTabWidget
+from PyQt5.QtWidgets import QMainWindow, QVBoxLayout, QGroupBox, QWidget, QGridLayout, QPushButton, QTabWidget, QScrollArea, QFormLayout
 from CzytnikPliku import Czytnik
 from Slider import Slider
 
@@ -42,13 +42,30 @@ class MainWindow(QMainWindow):
 
 # tworzy liste CountryButons na podstawie dostarczonej listy (wszystkich) państw
 
+    # def prep_lista(self):
+    #     self.tab2 = QWidget()
+    #     # ustala rozkład na wertykalny (kolejnye przyciski beda dodawne pod soba)
+    #     self.tab2.layout = QVBoxLayout()
+    #     for kraj in self.__list:
+    #         self.tab2.layout.addWidget(CountryButton(kraj, self))
+    #     self.tab2.setLayout(self.tab2.layout)
+
     def prep_lista(self):
         self.tab2 = QWidget()
         # ustala rozkład na wertykalny (kolejnye przyciski beda dodawne pod soba)
         self.tab2.layout = QVBoxLayout()
         for kraj in self.__list:
             self.tab2.layout.addWidget(CountryButton(kraj, self))
-        self.tab2.setLayout(self.tab2.layout)
+        #formLayout = QFormLayout()
+        groupbox = QGroupBox("Country list")
+        groupbox.setLayout(self.tab2.layout)
+        scroll = QScrollArea()
+        scroll.setWidget(groupbox)
+        scroll.setWidgetResizable(True)
+
+        Layout = QVBoxLayout()
+        Layout.addWidget(scroll)
+        self.tab2.setLayout(Layout)
 
 
     def start_view(self):
