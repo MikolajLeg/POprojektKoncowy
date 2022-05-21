@@ -33,7 +33,6 @@ class ChoiceButton(QPushButton):
         self.__okno = Okno
         self.clicked.connect(self.wybor)
 
-
     def wybor(self):
         self.__okno.set_view(self.__nazwa)
         self.check_color()

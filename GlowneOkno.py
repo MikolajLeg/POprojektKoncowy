@@ -1,7 +1,7 @@
 from Panstwo import CountryCreator
 from ListOfObjectsCreator import ListOfObjectsCreator
-from Wykres import Rysuj
-from Buttons import CountryButton, ChoiceButton, PathButton, AddPatchButton , ErrorDisplay, CountryDisplay
+from Wykres import ChartMaker
+from Buttons import CountryButton, ChoiceButton, PathButton, AddPatchButton, ErrorDisplay, CountryDisplay
 from PyQt5.QtWidgets import QMainWindow, QVBoxLayout, QGroupBox, QWidget, QGridLayout, QPushButton, QTabWidget
 from CzytnikPliku import Czytnik
 from Slider import Slider
@@ -22,6 +22,7 @@ class MainWindow(QMainWindow):
         self.__end_date = None
         self.__map_button = ChoiceButton("Mapa", self)
         self.__chart_button = ChoiceButton("Wykres", self)
+        print(self.__view)
 
         self.resize(1500, 1000)
         self.__init_view()
@@ -38,7 +39,6 @@ class MainWindow(QMainWindow):
         # Mainuje group_boxa cntralnym wigdetem wysweitlanego okna, bez tego gruop_box nie bedzie wyswietlony
         self.setCentralWidget(group_box)
         self.prep_lista()
-
 
 # tworzy liste CountryButons na podstawie dostarczonej listy (wszystkich) państw
 
@@ -113,7 +113,7 @@ class MainWindow(QMainWindow):
     def show_chart(self):
         # ustala że w głownym oknie będzie wyświetlany wykres
         self.__layout.removeWidget(self.__chart)
-        self.__chart = Rysuj(self.__short_list, self.__start_date, self.__end_date, self.__error_disp)
+        self.__chart = ChartMaker(self.__short_list, self.__start_date, self.__end_date, self.__error_disp)
 
     def show_map(self):
         self.__chart = None

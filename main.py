@@ -4,6 +4,7 @@ from GlowneOkno import MainWindow
 from PyQt5.QtWidgets import QApplication
 
 
+
 if __name__ == '__main__':
 
 
@@ -11,3 +12,4 @@ if __name__ == '__main__':
     window = MainWindow()
     window.show()
     app.exec_()
+
