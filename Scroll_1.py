@@ -1,48 +1,92 @@
-from PyQt5.QtWidgets import QApplication, QPushButton, QVBoxLayout, QWidget, QFormLayout, QGroupBox, QLabel, QScrollArea
+# importing libraries
+from PyQt5.QtWidgets import *
+from PyQt5 import QtCore, QtGui
+from PyQt5.QtGui import *
+from PyQt5.QtCore import *
 import sys
-from PyQt5 import QtGui
-from Buttons import CountryButton, ChoiceButton, PathButton, AddPatchButton
-from Panstwo import CountryCreator
-from CzytnikPliku import Czytnik
-from DataGrinder import ListOfObjectsCreator
-
-
-class ScrollArea(QWidget):
+ 
+ 
+# class for scrollable label
+class ScrollLabel(QScrollArea):
+ 
+    # constructor
+    def __init__(self, *args, **kwargs):
+        QScrollArea.__init__(self, *args, **kwargs)
+ 
+        # making widget resizable
+        self.setWidgetResizable(True)
+ 
+        # making qwidget object
+        content = QWidget(self)
+        self.setWidget(content)
+ 
+        # vertical box layout
+        lay = QVBoxLayout(content)
+ 
+        # creating label
+        self.label = QLabel(content)
+ 
+        # setting alignment to the text
+        self.label.setAlignment(Qt.AlignLeft | Qt.AlignTop)
+ 
+        # making label multi-line
+        self.label.setWordWrap(True)
+ 
+        # adding label to the layout
+        lay.addWidget(self.label)
+ 
+    # the setText method
+    def setText(self, text):
+        # setting text to the label
+        self.label.setText(text)
+ 
+class Window(QMainWindow):
+ 
     def __init__(self):
         super().__init__()
-        self.__Creator = CountryCreator()
-        self.prep_lista()
-        self.__list = list()
-
-
-        formLayout = QFormLayout()
-        groupbox = QGroupBox("Country list")
-
-        formLayout.addWidget(self.tab2)
-
-
-        groupbox.setLayout(formLayout)
-        scroll = QScrollArea()
-        scroll.setWidget(groupbox)
-        scroll.setWidgetResizable(True)
-        scroll.setFixedHeight(400)
-
-        layout = QVBoxLayout()
-        layout.addWidget(scroll)
-        self.setLayout(layout)
-
-
-        # tworzy liste CountryButons na podstawie dostarczonej listy (wszystkich) państw
-
-    def prep_lista(self):
-        self.tab2 = QWidget()
-        # ustala rozkład na wertykalny (kolejnye przyciski beda dodawne pod soba)
-        self.tab2.layout = QVBoxLayout()
-        for kraj in self.__list:
-            self.tab2.layout.addWidget(CountryButton(kraj, self))
-        self.tab2.setLayout(self.tab2.layout)
-
-
-
-
-
+ 
+        # setting title
+        self.setWindowTitle("Python ")
+ 
+        # setting geometry
+        self.setGeometry(100, 100, 600, 400)
+ 
+        # calling method
+        self.UiComponents()
+ 
+        # showing all the widgets
+        self.show()
+ 
+    # method for widgets
+    def UiComponents(self):
+        # text to show in label
+        text = "ADAM CHUJ" \
+               "application and PyQt5 is one of them. PyQt5 is cross-platform " \
+               "GUI toolkit, a set of python bindings for Qt v5. One can develop" \
+               " an interactive desktop application with so much ease because " \
+               "of the tools and simplicity provided by this library.A GUI application" \
+               " consists of Front-end and Back-end. PyQt5 has provided a tool called " \
+               "‘QtDesigner’ to design the front-end by drag and drop method so that " \
+               "development can become faster and one can give more time on back-end stuff. "
+ 
+        # creating scroll label
+        label = ScrollLabel(self)
+ 
+        # setting text to the label
+        label.setText(text)
+ 
+        # setting geometry
+        label.setGeometry(100, 100, 200, 80)
+ 
+ 
+ 
+# create pyqt5 app
+App = QApplication(sys.argv)
+ 
+# create the instance of our Window
+window = Window()
+ 
+window.show()
+ 
+# start the app
+sys.exit(App.exec())
