@@ -21,7 +21,7 @@ class CountryButton(QPushButton):
     def __check_color(self):
 
         if self.__kraj.get_status():
-            self.setStyleSheet("background-color: grey")
+            self.setStyleSheet("background-color: yellow")
         else:
             self.setStyleSheet("background-color: light gray")
 
@@ -32,14 +32,17 @@ class ChoiceButton(QPushButton):
         self.__nazwa = nazwa
         self.__okno = Okno
         self.clicked.connect(self.wybor)
-        if self.__okno.get_view() == self.__nazwa:
-            self.setStyleSheet("background-color: grey")
-        else:
-            self.setStyleSheet("background-color: light gray")
 
     def wybor(self):
         self.__okno.set_view(self.__nazwa)
+        self.check_color()
         self.__okno.refresh_view()
+
+    def check_color(self):
+        if self.__okno.get_view() == self.__nazwa:
+            self.setStyleSheet("background-color: yellow")
+        else:
+            self.setStyleSheet("background-color: light gray")
 
 
 class PathButton(QLineEdit):
@@ -60,3 +63,22 @@ class AddPatchButton(QPushButton):
     def set_new_path(self):
         self.__sciezka = self.__inputer.get_tekst()
         self.__okno.set_path(self.__sciezka)
+
+
+class Display(QLineEdit):
+    def __init__(self):
+        super().__init__()
+        self.setReadOnly(True)
+
+
+
+class CountryDisplay(Display):
+    def __init__(self):
+        super().__init__()
+
+
+class ErrorDisplay(Display):
+    def __init__(self):
+        super().__init__()
+        self.setStyleSheet("color: red")
+

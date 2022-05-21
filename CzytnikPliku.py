@@ -2,21 +2,17 @@
 class Czytnik:
 
     def __init__(self):
-        pass
+        self.__data = dict()
 
     def read_file(self, filepath):
         with open(filepath, "r") as file:
-            data = dict()
-            alllines = file.readlines()[0:]
-            # czyta plik po czym czym przyporządkowuje pierwszą linijkę(z datami) do zmiennej daty
-            dates = alllines[0]
-            # pozbywa się znaku \n z końca linijki
-            dates = dates.rstrip("\n")
-            # rozdziela linikje na poszczególne daty
-            dates = dates.split(",")
+            self.__all_lines = file.readlines()[0:]
+            # czyta plik 
+            # przyporządkowuje pierwszą linijkę(z datami) do zmiennej daty za pomoca metody prepare_dates
+            self.__prepare_dates()
 
             # bierze linijki z danymi dla państw Unii
-            lines = alllines[4:]
+            lines = self.__all_lines[4:]
             for line in lines:
                 # zamienia przecinki wewnątrz cen na kropki
                 dotcomma = False
@@ -49,13 +45,23 @@ class Czytnik:
                 # ceny enrgii dla danego państwa przyporządkowuje odpowiednim data i wkłada do słownika z nazwą
                 # państwa jako kluczem
                 count = 1
-                data[name] = dict()
+                self.__data[name] = dict()
                 for p in price:
                     # print(count,end="- ")
-                    datetime = dates[count]
+                    datetime = self.__dates[count]
                     # print(datetime, end= "- ")
                     # print(p)
-                    data[name][datetime] = p
+                    self.__data[name][datetime] = p
                     count += 1
 
-        return data
+
+
+        return self.__data
+
+    def __prepare_dates(self):
+        self.__dates = self.__all_lines[0]
+        # pozbywa się znaku \n z końca linijki
+        self.__dates = self.__dates.rstrip("\n")
+        # rozdziela linikje na poszczególne daty
+        self.__dates = self.__dates.split(",")
+

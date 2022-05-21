@@ -1,9 +1,4 @@
 
-from CzytnikPliku import Czytnik
-
-
-
-
 
 # wzorzec wytworzczy do tworzenia listy obiektow na podstawie podanych danych
 class ListOfObjectsCreator:
