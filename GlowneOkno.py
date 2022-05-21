@@ -7,6 +7,7 @@ from CzytnikPliku import Czytnik
 from Slider import Slider
 
 
+
 class MainWindow(QMainWindow):
     def __init__(self, start_date, end_date):
         super().__init__()
