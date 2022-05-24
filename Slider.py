@@ -1,5 +1,5 @@
 from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import ( QGridLayout, QGroupBox,
+from PyQt5.QtWidgets import (QGridLayout, QGroupBox,
                              QVBoxLayout, QWidget, QSlider)
 
 class Slider(QWidget):
@@ -55,13 +55,13 @@ class Slider(QWidget):
 
     def ValueCheck_1(self):
 
-        if self.slider_1.sliderPosition() > self.slider_2.sliderPosition():
-            self.slider_2.setSliderPosition(self.slider_1.sliderPosition())
+        if self.slider_1.sliderPosition() >= self.slider_2.sliderPosition():
+            self.slider_2.setSliderPosition(self.slider_1.sliderPosition() + 1)
 
     def ValueCheck_2(self):
 
-        if self.slider_2.sliderPosition() < self.slider_1.sliderPosition():
-            self.slider_1.setSliderPosition(self.slider_2.sliderPosition())
+        if self.slider_2.sliderPosition() <= self.slider_1.sliderPosition():
+            self.slider_1.setSliderPosition(self.slider_2.sliderPosition() - 1)
 
 
     def __set_start_date(self):

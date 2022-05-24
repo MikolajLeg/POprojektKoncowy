@@ -2,6 +2,7 @@
 from PyQt5.QtWidgets import QPushButton, QLineEdit
 
 
+
 class CountryButton(QPushButton):
     def __init__(self, Kraj, Okno):
         super().__init__(Kraj.get_name())

@@ -2,10 +2,15 @@ from Panstwo import CountryCreator
 from ListOfObjectsCreator import ListOfObjectsCreator
 from Wykres import ChartMaker
 from Buttons import CountryButton, ChoiceButton, PathButton, AddPatchButton, ErrorDisplay, CountryDisplay
-from PyQt5.QtWidgets import QMainWindow, QVBoxLayout, QGroupBox, QWidget, QGridLayout, QPushButton, QTabWidget, QScrollArea, QFormLayout
+from PyQt5.QtWidgets import QMainWindow, QLabel, QVBoxLayout, QGroupBox, QWidget, QGridLayout, QPushButton, QTabWidget, QScrollArea, QFormLayout
 from CzytnikPliku import Czytnik
 from Slider import Slider
-
+from PyQt5 import Qt
+from PyQt5.QtGui import *
+from PyQt5.QtCore import *
+from PyQt5.QtWidgets import *
+from Scroll_1 import ScrollLabel
+from cos import PdfReportGenerator
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -22,12 +27,16 @@ class MainWindow(QMainWindow):
         self.__end_date = None
         self.__map_button = ChoiceButton("Mapa", self)
         self.__chart_button = ChoiceButton("Wykres", self)
-        print(self.__view)
-
+        self.__pdf = PdfReportGenerator()
         self.resize(1500, 1000)
         self.__init_view()
         self.tabs = QTabWidget()
         self.start_view()
+        self.__label = ScrollLabel
+
+
+
+
 
     def __init_view(self):
 
@@ -62,10 +71,9 @@ class MainWindow(QMainWindow):
         scroll = QScrollArea()
         scroll.setWidget(groupbox)
         scroll.setWidgetResizable(True)
-
-        Layout = QVBoxLayout()
-        Layout.addWidget(scroll)
-        self.tab2.setLayout(Layout)
+        layout = QVBoxLayout()
+        layout.addWidget(scroll)
+        self.tab2.setLayout(layout)
 
 
     def start_view(self):
@@ -99,7 +107,7 @@ class MainWindow(QMainWindow):
          self.__layout.addWidget(AddPatchButton("Dodaj Plik", self, self.__inputer), 0, 26, 2, 2)
          self.__layout.addWidget(QPushButton("Daty"), 17, 0, 1, 2)
          self.__layout.addWidget(self.__slider, 17, 2, 2, 18)
-         self.__layout.addWidget(QPushButton("PDF/JPG"), 17, 20, 1, 2)
+         self.__layout.addWidget(QPushButton("pdf"), 17, 20, 1, 2)
 
 
     def refresh_view(self):

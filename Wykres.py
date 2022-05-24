@@ -69,6 +69,7 @@ class ChartMaker(FigureCanvasQTAgg):
             count = count + 1
             if count > 6:
                 self.__disp.setText("Error: Zbyt dużo zanaznaczonych państw, wyswietlanie tylko czesci")
+
                 break
             dates = list()
             costs = list()
