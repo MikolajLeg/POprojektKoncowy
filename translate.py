@@ -1,7 +1,9 @@
 
 class Translator:
+    def __init__(self):
+        pass
 
-    def Translate(self, name):
+    def translate(self, name):
         if name == "Eesti":
             name = "Estonia"
             return name
@@ -9,7 +11,7 @@ class Translator:
             name = 'Denmark'
             return name
         elif name == "Elláda":
-            name = 'Grecja'
+            name = 'Greece'
             return name
         elif name == "España":
             name = 'Spain'
@@ -54,7 +56,7 @@ class Translator:
             name = 'Turkey'
             return name
         elif name == "Nederland":
-            name = 'Nederlands'
+            name = 'Netherlands'
             return name
         elif name == "Polska":
             name = 'Poland'
@@ -68,13 +70,13 @@ class Translator:
         elif name == "Österreich":
             name = 'Austria'
             return name
-        elif name == "Belgique/België":
+        elif name == "België":
             name = 'Belgium'
             return name
         elif name == "Bulgaria":
-            name = 'Denmark'
+            name = 'Bulgaria'
             return name
-        elif name == "Schweiz/Suisse/Svizzera":
+        elif name == "Suisse":
             name = 'Switzerland'
             return name
         elif name == "Kýpros":
@@ -84,10 +86,13 @@ class Translator:
             name = 'Czechia'
             return name
         elif name == "Deutschland":
-            name = 'Germany'
+            name = 'Germany '
             return name
         elif name == "Norge":
             name = 'Norway'
+            return name
+        else:
+            name = name
             return name
 
 
