@@ -44,6 +44,17 @@ class ChoiceButton(QPushButton):
         else:
             self.setStyleSheet("background-color: light gray")
 
+# class ButtonCreator:
+#     def __init__(self, ButtonType, arg_list, Okno, extra_arg = None):
+#         self.__arg = arg_list
+#         self.__okno = Okno
+#         self.__Button = ButtonType
+#         self.__extra_arg = extra_arg
+#
+#     def __make_buttons(self):
+#         for arg in self.__arg:
+#
+
 
 class PathButton(QLineEdit):
     def __init__(self):

@@ -44,17 +44,20 @@ class ChartMaker(FigureCanvasQTAgg):
 
         # ustawia opis osi y (kosztow)
         ax.set_yticks(np.arange(self.__minimum, self.__maximum, 0.05))
-        if self.__num_of_dates > 15:
-            mulitiply = np.ceil(self.__num_of_dates/15)
+        if self.__num_of_dates > 12:
+            mulitiply = np.ceil(self.__num_of_dates/12)
             tick_dates = list()
 
             for dates in self.__all_dates.values():
                 #print(self.__all_dates.values())
+                if len(dates) < self.__num_of_dates:
+                    continue
+                else:
+                    for num in range(len(dates)):
 
-                for num in range(len(dates)):
-                    if num % mulitiply  ==0 :
-                        print("tes")
-                        tick_dates.append(dates[num])
+                        if num % mulitiply == 0:
+                            tick_dates.append(dates[num])
+                    break
             ax.set_xticks(tick_dates)
 
         ax.set_xlabel("data")

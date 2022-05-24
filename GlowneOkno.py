@@ -1,8 +1,9 @@
 from Panstwo import CountryCreator
 from ListOfObjectsCreator import ListOfObjectsCreator
 from Wykres import ChartMaker
+from mapa import MapMaker
 from Buttons import CountryButton, ChoiceButton, PathButton, AddPatchButton, ErrorDisplay, CountryDisplay
-from PyQt5.QtWidgets import QMainWindow, QVBoxLayout, QGroupBox, QWidget, QGridLayout, QPushButton, QTabWidget, QScrollArea, QFormLayout
+from PyQt5.QtWidgets import QMainWindow, QVBoxLayout, QGroupBox, QWidget, QGridLayout, QPushButton, QTabWidget, QScrollArea
 from CzytnikPliku import Czytnik
 from Slider import Slider
 
@@ -22,7 +23,6 @@ class MainWindow(QMainWindow):
         self.__end_date = None
         self.__map_button = ChoiceButton("Mapa", self)
         self.__chart_button = ChoiceButton("Wykres", self)
-        print(self.__view)
 
         self.resize(1500, 1000)
         self.__init_view()
@@ -56,7 +56,6 @@ class MainWindow(QMainWindow):
         self.tab2.layout = QVBoxLayout()
         for kraj in self.__list:
             self.tab2.layout.addWidget(CountryButton(kraj, self))
-        #formLayout = QFormLayout()
         groupbox = QGroupBox("Country list")
         groupbox.setLayout(self.tab2.layout)
         scroll = QScrollArea()
@@ -133,7 +132,8 @@ class MainWindow(QMainWindow):
         self.__chart = ChartMaker(self.__short_list, self.__start_date, self.__end_date, self.__error_disp)
 
     def show_map(self):
-        self.__chart = None
+        self.__layout.removeWidget(self.__chart)
+        self.__chart = MapMaker(self.__short_list)
         # ustala że w głownym oknie będzie wyświetlany mapa
 
     def get_view(self):
