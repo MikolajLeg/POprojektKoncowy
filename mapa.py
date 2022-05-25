@@ -10,7 +10,7 @@ import plotly.express as px
 
 
 class MapMaker(FigureCanvasQTAgg):
-    def __init__(self,countries):
+    def __init__(self, countries):
         self.__fig = Figure()
         self.__list = countries
         self.__country_data = dict()
@@ -28,9 +28,6 @@ class MapMaker(FigureCanvasQTAgg):
     def __make_map(self):
         self.__kraj = Kraj
         self.__ax.clear()
-        self.dens = pd.read_csv("Electricity prices for household consumers - bi-annual data (from 2007 onwards) [NRG_PC_204].csv")
-        self.dens["Density"] = self.dens["Density[a]"].apply(self.__kraj.get_dates_and_cost)
-
         self.__data.plot(ax =self.__ax,color="yellow", edgecolor="red",linewidth=0.4)
         self.__set_limits_on_axes()
         self.__check_countries()
