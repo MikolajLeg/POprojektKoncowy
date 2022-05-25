@@ -8,16 +8,21 @@ from matplotlib.figure import Figure
 
 
 class MapMaker(FigureCanvasQTAgg):
-    def __init__(self,countries):
-        self.__fig = Figure()
+    def __init__(self,countries,start_date,end_date,  width=10, height=15, dpi=100):
+        self.__fig = Figure(figsize=(width, height), dpi=dpi)
         self.__list = countries
         self.__country_data = dict()
-        super().__init__(self.__fig)
+        self.__start_date = start_date
+        self.__end_date = end_date
+        self.__max_price = None
+        self.__min_price = None
+        super().__init__(self.__fig,)
 
         self.__init_map()
 
 
     def __init_map(self):
+        self.__fig.suptitle(f"Ceny energii dla państw Unii Europejskiej w latach {self.__start_date} - {self.__end_date}")
         self.__ax = self.__fig.add_subplot(111)
         self.__data = gpd.read_file("NUTS_RG_60M_2021_3857_LEVL_0.geojson")
 
@@ -27,10 +32,9 @@ class MapMaker(FigureCanvasQTAgg):
         self.__ax.clear()
         self.__data.plot(ax =self.__ax,color="yellow", edgecolor="red",linewidth=0.4)
         self.__set_limits_on_axes()
-        self.__check_countries()
         self.__prepare_countries()
-        print("test")
-        print(self.__country_data)
+        self.__check_countries()
+
 
 
     def __set_limits_on_axes(self):
@@ -49,6 +53,8 @@ class MapMaker(FigureCanvasQTAgg):
                     country_costs +=v
                     num +=1
             avg_cost = country_costs/num
+            self.__price_check(avg_cost)
+
             self.__country_data[country.get_name()] = avg_cost
 
 
@@ -64,17 +70,34 @@ class MapMaker(FigureCanvasQTAgg):
 
                 new_nuts_name = T.translate(new_nuts_name)
                 if new_nuts_name == country.get_name():
-                    print(" ")
-                    print("THEY ARE SAME")
-                    print(nuts_name)
-                    print(country.get_name())
-                    self.__paint_country(nuts_name)
+                    self.__paint_country(nuts_name,new_nuts_name)
 
 
 
-    def __paint_country(self,nuts_name):
+    def __paint_country(self,nuts_name,country_name):
+        self.__price_range()
         region = self.__data[self.__data.NAME_LATN == nuts_name]
-        region.plot(ax=self.__ax, color="blue")
+        density = (self.__country_data[country_name] - self.__min_price)*self.__multi
+        region.plot(ax=self.__ax, color=(density, 0.5,1 ))
+
+    def __price_check(self,avg_cost):
+        if not self.__max_price:
+            self.__max_price = avg_cost
+        if not self.__min_price:
+            self.__min_price = avg_cost
+        if self.__max_price < avg_cost:
+            self.__max_price = avg_cost
+        if self.__min_price > avg_cost:
+            self.__min_price = avg_cost
+
+
+    def __price_range(self):
+        if self.__max_price == self.__min_price:
+            self.__multi = 1%self.__max_price
+        else:
+            price_range = self.__max_price - self.__min_price
+            self.__multi  = 1.0/price_range
+
 
 
 
