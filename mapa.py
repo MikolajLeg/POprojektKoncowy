@@ -30,7 +30,7 @@ class MapMaker(FigureCanvasQTAgg):
 
     def __make_map(self):
         self.__ax.clear()
-        self.__data.plot(ax =self.__ax,color="yellow", edgecolor="red",linewidth=0.4)
+        self.__data.plot(ax=self.__ax, color="lightgrey", edgecolor="red",linewidth=0.4)
         self.__set_limits_on_axes()
         self.__prepare_countries()
         self.__check_countries()
@@ -43,18 +43,40 @@ class MapMaker(FigureCanvasQTAgg):
 
     def __prepare_countries(self):
         for country in self.__list:
-            dates_and_costs = country.get_dates_and_cost()
             country_costs = 0
-            num =0
-            for k,v in dates_and_costs.items():
-                if v == "no data":
-                    continue
+            num = 0
+            dates_and_costs = country.get_dates_and_cost()
+            check = False
+
+            if self.__start_date == self.__end_date:
+                if dates_and_costs[self.__start_date] == 'no data':
+                    country_costs =0
                 else:
-                    country_costs +=v
                     num +=1
+                    country_costs = dates_and_costs[self.__start_date]
+
+            else:
+                for date, cost in dates_and_costs.items():
+                    if date == self.__start_date:
+                        check = not check
+
+                    if cost == 'no data':
+                        continue
+
+                    if check:
+                        country_costs += cost
+                        num += 1
+
+                    if date == self.__end_date:
+                        check = not check
+
+            if num == 0:
+                num = 1
+            # if country_costs == 0:
+            #     country_costs = 1
+
             avg_cost = country_costs/num
             self.__price_check(avg_cost)
-
             self.__country_data[country.get_name()] = avg_cost
 
 
@@ -73,12 +95,11 @@ class MapMaker(FigureCanvasQTAgg):
                     self.__paint_country(nuts_name,new_nuts_name)
 
 
-
     def __paint_country(self,nuts_name,country_name):
         self.__price_range()
         region = self.__data[self.__data.NAME_LATN == nuts_name]
         density = (self.__country_data[country_name] - self.__min_price)*self.__multi
-        region.plot(ax=self.__ax, color=(density, 0.5,1 ))
+        region.plot(ax=self.__ax, color=(density, 1 - density, 1 ), legend=True)
 
     def __price_check(self,avg_cost):
         if not self.__max_price:
@@ -91,12 +112,17 @@ class MapMaker(FigureCanvasQTAgg):
             self.__min_price = avg_cost
 
 
+# checks price range of prices and
     def __price_range(self):
+
         if self.__max_price == self.__min_price:
-            self.__multi = 1%self.__max_price
+            if self.__max_price == 0:
+                self.__multi =0
+            else:
+                self.__multi = 1 % self.__max_price
         else:
             price_range = self.__max_price - self.__min_price
-            self.__multi  = 1.0/price_range
+            self.__multi = 1.0/ price_range
 
 
 

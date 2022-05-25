@@ -82,7 +82,6 @@ class Display(QLineEdit):
         self.setReadOnly(True)
 
 
-
 class CountryDisplay(Display):
     def __init__(self):
         super().__init__()

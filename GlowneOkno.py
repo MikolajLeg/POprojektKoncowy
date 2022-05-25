@@ -3,7 +3,9 @@ from ListOfObjectsCreator import ListOfObjectsCreator
 from Wykres import ChartMaker
 from mapa import MapMaker
 from Buttons import CountryButton, ChoiceButton, PathButton, AddPatchButton, ErrorDisplay, CountryDisplay
-from PyQt5.QtWidgets import QMainWindow, QVBoxLayout, QGroupBox, QWidget, QGridLayout, QPushButton, QTabWidget, QScrollArea
+from PyQt5.QtWidgets import QMainWindow, QVBoxLayout, QGroupBox, QWidget, QGridLayout, QPushButton, QTabWidget, \
+    QScrollArea
+from PyQt5.QtGui import QIcon
 from CzytnikPliku import Czytnik
 from Slider import Slider
 
@@ -32,6 +34,7 @@ class MainWindow(QMainWindow):
     def __init_view(self):
 
         self.setWindowTitle("Aplikacja")
+        self.setWindowIcon(QIcon('oip_eZL_icon.ico'))
         self.__layout = QGridLayout()
         # ustala Group boxa ktory pozwala na wyswietlenie dodatkowych ramek/pol/wykresow wewnątrz
         group_box = QGroupBox()
