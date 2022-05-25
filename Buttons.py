@@ -3,9 +3,9 @@ from PyQt5.QtWidgets import QPushButton, QLineEdit
 
 
 class CountryButton(QPushButton):
-    def __init__(self, Kraj, Okno):
-        super().__init__(Kraj.get_name())
-        self.__kraj = Kraj
+    def __init__(self, Country, Okno):
+        super().__init__(Country.get_name())
+        self.__kraj = Country
         self.__okno = Okno
         self.clicked.connect(self.__status)
         self.__check_color()

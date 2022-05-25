@@ -4,11 +4,10 @@ from translate import Translator
 import geopandas as gpd
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg
 from matplotlib.figure import Figure
-#from shapely.geometry import Point
-
+# from shapely.geometry import Point
 
 class MapMaker(FigureCanvasQTAgg):
-    def __init__(self,countries,start_date,end_date,  width=10, height=15, dpi=100):
+    def __init__(self, countries, start_date, end_date,  width=10, height=15, dpi=100):
         self.__fig = Figure(figsize=(width, height), dpi=dpi)
         self.__list = countries
         self.__country_data = dict()
@@ -20,7 +19,6 @@ class MapMaker(FigureCanvasQTAgg):
 
         self.__init_map()
 
-
     def __init_map(self):
         self.__fig.suptitle(f"Ceny energii dla państw Unii Europejskiej w latach {self.__start_date} - {self.__end_date}")
         self.__ax = self.__fig.add_subplot(111)
@@ -31,6 +29,7 @@ class MapMaker(FigureCanvasQTAgg):
     def __make_map(self):
         self.__ax.clear()
         self.__data.plot(ax=self.__ax, color="lightgrey", edgecolor="red",linewidth=0.4)
+
         self.__set_limits_on_axes()
         self.__prepare_countries()
         self.__check_countries()
@@ -99,7 +98,8 @@ class MapMaker(FigureCanvasQTAgg):
         self.__price_range()
         region = self.__data[self.__data.NAME_LATN == nuts_name]
         density = (self.__country_data[country_name] - self.__min_price)*self.__multi
-        region.plot(ax=self.__ax, color=(density, 1 - density, 1 ), legend=True)
+
+        region.plot(ax=self.__ax, color=(1-density, 1-density, 1), legend=True)
 
     def __price_check(self,avg_cost):
         if not self.__max_price:
