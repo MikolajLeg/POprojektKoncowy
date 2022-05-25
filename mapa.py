@@ -4,7 +4,9 @@ from translate import Translator
 import geopandas as gpd
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg
 from matplotlib.figure import Figure
-#from shapely.geometry import Point
+import pandas as pd
+from Panstwo import Kraj
+import plotly.express as px
 
 
 class MapMaker(FigureCanvasQTAgg):
@@ -24,7 +26,11 @@ class MapMaker(FigureCanvasQTAgg):
         self.__make_map()
 
     def __make_map(self):
+        self.__kraj = Kraj
         self.__ax.clear()
+        self.dens = pd.read_csv("Electricity prices for household consumers - bi-annual data (from 2007 onwards) [NRG_PC_204].csv")
+        self.dens["Density"] = self.dens["Density[a]"].apply(self.__kraj.get_dates_and_cost)
+
         self.__data.plot(ax =self.__ax,color="yellow", edgecolor="red",linewidth=0.4)
         self.__set_limits_on_axes()
         self.__check_countries()
