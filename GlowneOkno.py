@@ -128,12 +128,12 @@ class MainWindow(QMainWindow):
 
     def show_chart(self):
         # ustala że w głownym oknie będzie wyświetlany wykres
-        self.__layout.removeWidget(self.__chart)
+        #self.__layout.removeWidget(self.__chart)
         self.__chart = ChartMaker(self.__short_list, self.__start_date, self.__end_date, self.__error_disp)
 
     def show_map(self):
-        self.__layout.removeWidget(self.__chart)
-        self.__chart = MapMaker(self.__short_list)
+        #self.__layout.removeWidget(self.__chart)
+        self.__chart = MapMaker(self.__short_list, self.__start_date, self.__end_date,)
         # ustala że w głownym oknie będzie wyświetlany mapa
 
     def get_view(self):
