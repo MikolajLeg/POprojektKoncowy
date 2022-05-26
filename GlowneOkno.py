@@ -4,8 +4,11 @@ from Wykres import ChartMaker
 from mapa import MapMaker
 from Buttons import CountryButton, ChoiceButton, PathButton, AddPatchButton, ErrorDisplay, CountryDisplay
 from PyQt5.QtWidgets import QMainWindow, QVBoxLayout, QGroupBox, QWidget, QGridLayout, QPushButton, QTabWidget, QScrollArea
-from CzytnikPliku import Czytnik
+from file_chooser import Czytnik
 from Slider import Slider
+from PyQt5.QtGui import QIcon
+from file_loader import FileLoader
+from pdf_btn import PdfSaveButton
 
 
 class MainWindow(QMainWindow):
@@ -23,6 +26,12 @@ class MainWindow(QMainWindow):
         self.__end_date = None
         self.__map_button = ChoiceButton("Mapa", self)
         self.__chart_button = ChoiceButton("Wykres", self)
+        file_loader_name = "Select file"
+        self.__file_loader = FileLoader(file_loader_name, self)
+
+
+
+
 
         self.resize(1500, 1000)
         self.__init_view()
@@ -32,6 +41,8 @@ class MainWindow(QMainWindow):
     def __init_view(self):
 
         self.setWindowTitle("Aplikacja")
+        icon = QIcon('img.png')
+        self.setWindowIcon(icon)
         self.__layout = QGridLayout()
         # ustala Group boxa ktory pozwala na wyswietlenie dodatkowych ramek/pol/wykresow wewnątrz
         group_box = QGroupBox()
@@ -93,12 +104,13 @@ class MainWindow(QMainWindow):
          self.__layout.addWidget(self.tab2, 2, 22, 16, 6)
          self.__layout.addWidget(self.__map_button, 0, 0, 2, 10)
          self.__layout.addWidget(self.__chart_button, 0, 10, 2, 10)
-         self.__inputer = PathButton()
-         self.__layout.addWidget(self.__inputer, 0, 20, 2, 6)
-         self.__layout.addWidget(AddPatchButton("Dodaj Plik", self, self.__inputer), 0, 26, 2, 2)
+         # self.__inputer = PathButton()
+         # self.__layout.addWidget(self.__inputer, 0, 20, 2, 6)
+         # self.__layout.addWidget(AddPatchButton("Dodaj Plik", self, self.__inputer), 0, 26, 2, 2)
+         self.__layout.addLayout(self.__file_loader, 0, 20, 2, 8)
          self.__layout.addWidget(QPushButton("Daty"), 17, 0, 1, 2)
          self.__layout.addWidget(self.__slider, 17, 2, 2, 18)
-         self.__layout.addWidget(QPushButton("PDF/JPG"), 17, 20, 1, 2)
+         # self.__layout.addWidget(self.pdf_btn, 17, 20, 1, 2)
 
 
     def refresh_view(self):
@@ -149,15 +161,23 @@ class MainWindow(QMainWindow):
     def set_end_date(self,end_date):
         self.__end_date = end_date
 
+    def __prepare_pdf_gen_button(self):
+        self.pdf_btn = PdfSaveButton("Save as PDF", self.__chart)
+        return self.pdf_btn
+
 
 
     def __change_data(self):
-
         NowyCzytnik = Czytnik()
         dane = NowyCzytnik.read_file(self.__sciezka)
-        ListCreator = ListOfObjectsCreator(dane,CountryCreator())
+        ListCreator = ListOfObjectsCreator(dane, CountryCreator())
         self.__list = ListCreator.get_list()
         self.__slider = Slider(self, self.__list)
         self.start_view()
+
+
+
+
+
 
 
