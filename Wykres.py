@@ -107,8 +107,8 @@ class ChartMaker(FigureCanvasQTAgg):
             self.__all_costs[kraj.get_name()] = costs
             self.__num_of_dates = len(dates)
 
-            if count < 7:
-                self.__disp.clear()
+            # if count < 7:
+            #     self.__disp.clear()
 
     def __check_min_max(self, cost):
         if cost < self.__minimum:
