@@ -2,12 +2,13 @@ from Panstwo import CountryCreator
 from ListOfObjectsCreator import ListOfObjectsCreator
 from Wykres import ChartMaker
 from mapa import MapMaker
-from Buttons import CountryButton, ChoiceButton, PathButton, AddPatchButton, ErrorDisplay, CountryDisplay
+from Buttons import CountryButton, ChoiceButton, ErrorDisplay, CountryDisplay, PdfSaveButton
 from PyQt5.QtWidgets import QMainWindow, QVBoxLayout, QGroupBox, QWidget, QGridLayout, QPushButton, QTabWidget, \
     QScrollArea
 from PyQt5.QtGui import QIcon
-from CzytnikPliku import Czytnik
+from file_reader import Czytnik
 from Slider import Slider
+from file_loader import FileLoader
 
 
 class MainWindow(QMainWindow):
@@ -25,6 +26,8 @@ class MainWindow(QMainWindow):
         self.__end_date = None
         self.__map_button = ChoiceButton("Mapa", self)
         self.__chart_button = ChoiceButton("Wykres", self)
+        self.__file_loader = FileLoader("select file",self)
+        self.__pdf_button = PdfSaveButton("Create PDF")
 
         self.resize(1500, 1000)
         self.__init_view()
@@ -97,11 +100,12 @@ class MainWindow(QMainWindow):
          self.__layout.addWidget(self.tab2, 2, 22, 16, 6)
          self.__layout.addWidget(self.__map_button, 0, 0, 2, 10)
          self.__layout.addWidget(self.__chart_button, 0, 10, 2, 10)
-         self.__inputer = PathButton()
-         self.__layout.addWidget(self.__inputer, 0, 20, 2, 6)
-         self.__layout.addWidget(AddPatchButton("Dodaj Plik", self, self.__inputer), 0, 26, 2, 2)
+         # self.__inputer = PathButton()
+         # self.__layout.addWidget(self.__inputer, 0, 20, 2, 6)
+         # self.__layout.addWidget(AddPatchButton("Dodaj Plik", self, self.__inputer), 0, 26, 2, 2)
+         self.__layout.addLayout(self.__file_loader,0,20,2,8)
          self.__layout.addWidget(self.__slider, 17, 0, 2, 18)
-         self.__layout.addWidget(QPushButton("PDF/JPG"), 17, 20, 1, 2)
+         self.__layout.addWidget(self.__pdf_button, 17, 20, 1, 2)
 
 
     def refresh_view(self):
@@ -114,12 +118,14 @@ class MainWindow(QMainWindow):
 
         if self.__view == "Wykres":
             self.show_chart()
+            self.__pdf_button.update_chart(self.__chart)
         elif self.__view == "Mapa":
             self.show_map()
         else:
             self.tab1 = QWidget()
             self.tab1.setStyleSheet("border: 1px solid red")
             self.__chart = self.tab1
+
 
         self.__chart_button.check_color()
         self.__map_button.check_color()

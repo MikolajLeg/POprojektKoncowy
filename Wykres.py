@@ -1,5 +1,6 @@
 
 
+from io import BytesIO
 import numpy as np
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg
 from matplotlib.figure import Figure
@@ -115,3 +116,11 @@ class ChartMaker(FigureCanvasQTAgg):
             self.__minimum = cost
         if cost > self.__maximum:
             self.__maximum = cost
+
+    def get_img(self):
+        img_data = BytesIO()
+        self.__fig.savefig(img_data)
+        seek_offset = 0
+        img_data.seek(seek_offset)
+
+        return img_data
