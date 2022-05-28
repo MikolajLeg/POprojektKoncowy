@@ -3,12 +3,11 @@ from ListOfObjectsCreator import ListOfObjectsCreator
 from Wykres import ChartMaker
 from mapa import MapMaker
 from Buttons import CountryButton, ChoiceButton, PathButton, AddPatchButton, ErrorDisplay, CountryDisplay
-from PyQt5.QtWidgets import QMainWindow, QVBoxLayout, QGroupBox, QWidget, QGridLayout, QPushButton, QTabWidget, QScrollArea
+from PyQt5.QtWidgets import QMainWindow, QVBoxLayout, QGroupBox, QWidget, QGridLayout, QPushButton, QTabWidget, QScrollArea, QTextEdit
 from file_chooser import Czytnik
 from Slider import Slider
 from PyQt5.QtGui import QIcon
 from file_loader import FileLoader
-from pdf_btn import PdfSaveButton
 
 
 class MainWindow(QMainWindow):
@@ -29,6 +28,15 @@ class MainWindow(QMainWindow):
         file_loader_name = "Select file"
         self.__file_loader = FileLoader(file_loader_name, self)
 
+        # self.groupbox_error = QGroupBox("ERROR BAR")
+        # self.groupbox_error.setLayout(self.__error_disp.layout)
+        # scroll = QScrollArea()
+        # scroll.setWidget(self.groupbox_error)
+        # scroll.setWidgetResizable(True)
+        # error_layout = QVBoxLayout()
+        # error_layout.addWidget(scroll)
+        # self.__error_disp.setLayout(error_layout)
+        #
 
 
 

@@ -50,3 +50,5 @@ class FileLoader(QHBoxLayout):
         else:
             print("sth wrong???")
             self.__loader.setValue(1)
+
+

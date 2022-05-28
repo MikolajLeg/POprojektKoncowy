@@ -5,6 +5,7 @@ import geopandas as gpd
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg
 from matplotlib.figure import Figure
 #from shapely.geometry import Point
+import matplotlib.pyplot as plt
 
 
 class MapMaker(FigureCanvasQTAgg):
@@ -26,7 +27,6 @@ class MapMaker(FigureCanvasQTAgg):
         self.__ax = self.__fig.add_subplot(111)
         self.__data = gpd.read_file("NUTS_RG_60M_2021_3857_LEVL_0.geojson")
 
-        self.__make_map()
 
     def __make_map(self):
         self.__ax.clear()
@@ -97,7 +97,6 @@ class MapMaker(FigureCanvasQTAgg):
         else:
             price_range = self.__max_price - self.__min_price
             self.__multi  = 1.0/price_range
-
 
 
 

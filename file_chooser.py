@@ -4,6 +4,7 @@ class Czytnik:
     def __init__(self):
         self.__data = dict()
 
+
     def read_file(self, filepath):
         with open(filepath, "r") as file:
             self.__all_lines = file.readlines()[0:]
