@@ -22,12 +22,12 @@ class PdfReportGenerator:
         canvas = Canvas(filepath, pagesize=pagesize)
         canvas.setFont("Times-Roman",20)
         title = " test title"
-        title_offset, img_offset = 100, 500
+        title_offset, img_offset = 50, 600
         title_x, title_y = A4[0] / 2, A4[1] - title_offset
         chart_x, chart_y = 0, A4[1] - img_offset
 
         canvas.drawCentredString(title_x, title_y, title)
-        canvas.drawImage(img,chart_x,chart_y, 600, 600)
+        canvas.drawImage(img,chart_x,chart_y, 600, 450)
 
         return canvas
 
