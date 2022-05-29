@@ -65,3 +65,38 @@ class Czytnik:
         # rozdziela linikje na poszczególne daty
         self.__dates = self.__dates.split(",")
 
+
+class DataGrinder:
+    def __init__(self):
+        pass
+
+    def grind_data(self,start_date,end_date, country):
+        dates = list()
+        costs = list()
+        check = False
+
+        if start_date == end_date:
+            cost = country.get_dates_and_cost().get(start_date)
+            dates.append(start_date)
+            costs.append(cost)
+
+        else:
+            for date, cost in country.get_dates_and_cost().items():
+
+                if date == start_date:
+                    check = not check
+
+                if cost == 'no data':
+                    dates.append(date)
+                    costs.append(None)
+                    continue
+
+                if check:
+                    dates.append(date)
+                    costs.append(cost)
+
+                if date == end_date:
+                    check = not check
+
+
+        return dates, costs

@@ -4,6 +4,7 @@ from io import BytesIO
 import numpy as np
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg
 from matplotlib.figure import Figure
+from file_reader import DataGrinder
 
 
 class ChartMaker(FigureCanvasQTAgg):
@@ -50,7 +51,6 @@ class ChartMaker(FigureCanvasQTAgg):
             tick_dates = list()
 
             for dates in self.__all_dates.values():
-                #print(self.__all_dates.values())
                 if len(dates) < self.__num_of_dates:
                     continue
                 else:
@@ -74,48 +74,25 @@ class ChartMaker(FigureCanvasQTAgg):
             if count > 6:
                 self.__disp.setText("Error: Zbyt dużo zanaznaczonych państw, wyswietlanie tylko czesci")
                 break
-            dates = list()
-            costs = list()
-            check = False
+            Grinder = DataGrinder()
+            dates, costs = Grinder.grind_data(self.__start_date,self.__end_date,kraj)
 
-            if self.__start_date == self.__end_date:
-                cost = kraj.get_dates_and_cost().get(self.__start_date)
-                dates.append(self.__start_date)
-                costs.append(cost)
+            for cost in costs:
                 self.__check_min_max(cost)
-
-            else:
-                for date, cost in kraj.get_dates_and_cost().items():
-
-                    if date == self.__start_date:
-                        check = not check
-
-                    if cost == 'no data':
-                        dates.append(date)
-                        costs.append(None)
-                        continue
-
-                    self.__check_min_max(cost)
-                    if check:
-                        dates.append(date)
-                        costs.append(cost)
-
-                    if date == self.__end_date:
-                        check = not check
 
             self.__lgd.append(kraj.get_name())
             self.__all_dates[kraj.get_name()] = dates
             self.__all_costs[kraj.get_name()] = costs
             self.__num_of_dates = len(dates)
 
-            # if count < 7:
-            #     self.__disp.clear()
-
     def __check_min_max(self, cost):
-        if cost < self.__minimum:
-            self.__minimum = cost
-        if cost > self.__maximum:
-            self.__maximum = cost
+        if cost == None:
+            return
+        else:
+            if cost < self.__minimum:
+                self.__minimum = cost
+            if cost > self.__maximum:
+                self.__maximum = cost
 
     def get_img(self):
         img_data = BytesIO()

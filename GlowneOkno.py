@@ -74,7 +74,7 @@ class MainWindow(QMainWindow):
 
 
     def start_view(self):
-         self.prep_lista()
+         # self.prep_lista()
          self.__short_list.clear()
 
          for kraj in self.__short_list:
@@ -118,7 +118,7 @@ class MainWindow(QMainWindow):
 
         if self.__view == "Wykres":
             self.show_chart()
-            self.__pdf_button.update_chart(self.__chart)
+            self.__pdf_button.update_chart(self.__chart, self.__short_list)
         elif self.__view == "Mapa":
             self.show_map()
         else:
