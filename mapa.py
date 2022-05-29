@@ -147,14 +147,13 @@ class MapMaker(FigureCanvasQTAgg):
                     name = name[1]
                 name = T.translate(name)
                 if name in self.__country_data.keys():
-                    self.__display.setText(f"{name} : {self.__country_data[name]} ")
+                    self.__display.append(f"{name} : {self.__country_data[name]} ")
                     return
                 else:
-                    self.__error_disp.setText("Data for country not avaible, please select country first")
                     return
 
 
-        self.__error_disp.setText("out of bounds")
+        self.__error_disp.append("out of bounds")
 
 
 

@@ -3,7 +3,7 @@ class Kraj:
         self.__name = country_name
         self.__ceny = dict()
         self.__add_data(dane_ceny)
-        self.__status = True
+        self.__status = False
 
     def __add_data(self, dictionary):
         for name, item in dictionary.items():

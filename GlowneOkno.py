@@ -97,15 +97,15 @@ class MainWindow(QMainWindow):
          self.__layout.addWidget(self.__error_disp, 16, 0, 1, 10)
          self.__layout.addWidget(self.__disp,16,10,1,10)
          self.__layout.addWidget(self.__chart, 2, 0, 14, 22)
-         self.__layout.addWidget(self.tab2, 2, 22, 16, 6)
+         self.__layout.addWidget(self.tab2, 2, 22, 17, 6)
          self.__layout.addWidget(self.__map_button, 0, 0, 2, 10)
          self.__layout.addWidget(self.__chart_button, 0, 10, 2, 10)
          # self.__inputer = PathButton()
          # self.__layout.addWidget(self.__inputer, 0, 20, 2, 6)
          # self.__layout.addWidget(AddPatchButton("Dodaj Plik", self, self.__inputer), 0, 26, 2, 2)
          self.__layout.addLayout(self.__file_loader,0,20,2,8)
-         self.__layout.addWidget(self.__slider, 17, 0, 2, 18)
-         self.__layout.addWidget(self.__pdf_button, 17, 20, 1, 2)
+         self.__layout.addWidget(self.__slider, 17, 0, 2, 22)
+         self.__layout.addWidget(self.__pdf_button, 16, 20, 1, 2)
 
 
     def refresh_view(self):

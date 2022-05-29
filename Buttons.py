@@ -1,5 +1,5 @@
 
-from PyQt5.QtWidgets import QPushButton, QLineEdit, QFileDialog
+from PyQt5.QtWidgets import QPushButton, QLineEdit, QFileDialog, QTextEdit, QVBoxLayout, QScrollArea, QGroupBox
 from pdf_generator import PdfReportGenerator
 
 
@@ -77,10 +77,27 @@ class AddPatchButton(QPushButton):
         self.__okno.set_path(self.__sciezka)
 
 
-class Display(QLineEdit):
+class Display(QTextEdit):
     def __init__(self):
         super().__init__()
         self.setReadOnly(True)
+        self.LineWrapMode()
+        self.adjustSize()
+        self.setMaximumSize(525,40)
+
+
+
+
+        #
+        # groupbox = QGroupBox("Country list")
+        # groupbox.setLayout(QVBoxLayout)
+        # scroll = QScrollArea()
+        # scroll.setWidget(groupbox)
+        # scroll.setWidgetResizable(True)
+        #
+        # Layout = QVBoxLayout()
+        # Layout.addWidget(scroll)
+        # self.setLayout(Layout)
 
 
 class CountryDisplay(Display):
@@ -88,10 +105,12 @@ class CountryDisplay(Display):
         super().__init__()
 
 
+
 class ErrorDisplay(Display):
     def __init__(self):
         super().__init__()
         self.setStyleSheet("color: red")
+
 
 
 class PdfSaveButton(QPushButton):
