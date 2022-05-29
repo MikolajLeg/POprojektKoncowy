@@ -118,7 +118,7 @@ class MainWindow(QMainWindow):
 
         if self.__view == "Wykres":
             self.show_chart()
-            self.__pdf_button.update_chart(self.__chart, self.__short_list)
+            self.__pdf_button.update_chart(self.__chart, self.__start_date,self.__end_date, self.__short_list)
         elif self.__view == "Mapa":
             self.show_map()
         else:

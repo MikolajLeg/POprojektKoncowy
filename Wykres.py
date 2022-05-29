@@ -30,7 +30,7 @@ class ChartMaker(FigureCanvasQTAgg):
         # ustawia osie układu wspólrzęnych oraz tytuł dla stworzonej figury
         self.__fig.clear()
         self.__fig.add_subplot()
-        self.__fig.suptitle(f"Ceny energii dla państw Unii Europejskiej w latach {self.__start_date} - {self.__end_date}")
+        self.__fig.suptitle(f"Ceny energii dla państw Europy w latach {self.__start_date} - {self.__end_date}")
         self.__prepare_data()
         self.__make_chart()
         self.__fig.tight_layout()

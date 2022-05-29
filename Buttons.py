@@ -103,13 +103,15 @@ class PdfSaveButton(QPushButton):
 
         self.clicked.connect(self.__save_btn_action)
 
-    def update_chart(self, chart, data):
+    def update_chart(self, chart, start_date, end_date, data):
         self.__chart = chart
         self.__data = data
+        self.__start_date = start_date
+        self.__end_date = end_date
 
     def __save_btn_action(self):
         filename = self.__prepare_file_chooser()
-        self.__pdf_generator.create_and_save_pdf(filename, self.__chart, self.__data)
+        self.__pdf_generator.create_and_save_pdf(filename, self.__chart,self.__start_date, self.__end_date, self.__data)
 
     def __prepare_file_chooser(self):
         filename, _ = QFileDialog.getSaveFileName(self, "Save PDF report", filter="PDF ( *.pdf )")

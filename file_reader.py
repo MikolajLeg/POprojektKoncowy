@@ -86,14 +86,14 @@ class DataGrinder:
                 if date == start_date:
                     check = not check
 
-                if cost == 'no data':
-                    dates.append(date)
-                    costs.append(None)
-                    continue
-
                 if check:
-                    dates.append(date)
-                    costs.append(cost)
+                    if cost == 'no data':
+                        dates.append(date)
+                        costs.append(None)
+                        continue
+                    else:
+                        dates.append(date)
+                        costs.append(cost)
 
                 if date == end_date:
                     check = not check
