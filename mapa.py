@@ -18,14 +18,14 @@ class MapMaker(FigureCanvasQTAgg):
         self.__min_price = None
         self.__error_disp = error_display
         self.__display = display
-        super().__init__(self.__fig,)
+        super().__init__(self.__fig)
 
         self.__init_map()
 
     def __init_map(self):
-        self.__fig.suptitle(f"Ceny energii dla państw Unii Europejskiej w latach {self.__start_date} - {self.__end_date}")
+        self.__fig.suptitle(f"Ceny energii dla państw Europy w latach {self.__start_date} - {self.__end_date}")
         self.__ax = self.__fig.add_subplot(111)
-        self.__data = gpd.read_file('MapaPlik.geojson')
+        self.__data = gpd.read_file("NUTS_RG_60M_2021_3857_LEVL_0.geojson")
 
         self.__make_map()
         self.__add_mouse_listener()
@@ -82,6 +82,7 @@ class MapMaker(FigureCanvasQTAgg):
                 num = 1
 
             avg_cost = country_costs/num
+            avg_cost = round(avg_cost,3)
             self.__price_check(avg_cost)
             self.__country_data[country.get_name()] = avg_cost
 
@@ -89,16 +90,17 @@ class MapMaker(FigureCanvasQTAgg):
     def __check_countries(self):
         T = Translator()
         for country in self.__list:
-            for nuts_name in self.__data.NAME_LATN:
-                if "/" in nuts_name:
-                    new_nuts_name = nuts_name.split("/")
-                    new_nuts_name = new_nuts_name[1]
-                else:
-                    new_nuts_name = nuts_name
+            if country.get_status():
+                for nuts_name in self.__data.NAME_LATN:
+                    if "/" in nuts_name:
+                        new_nuts_name = nuts_name.split("/")
+                        new_nuts_name = new_nuts_name[1]
+                    else:
+                        new_nuts_name = nuts_name
 
-                new_nuts_name = T.translate(new_nuts_name)
-                if new_nuts_name == country.get_name():
-                    self.__paint_country(nuts_name,new_nuts_name)
+                    new_nuts_name = T.translate(new_nuts_name)
+                    if new_nuts_name == country.get_name():
+                        self.__paint_country(nuts_name,new_nuts_name)
 
 
     def __paint_country(self, nuts_name, country_name):
@@ -147,14 +149,13 @@ class MapMaker(FigureCanvasQTAgg):
                     name = name[1]
                 name = T.translate(name)
                 if name in self.__country_data.keys():
-                    self.__display.setText(f"{name} : {self.__country_data[name]} ")
+                    self.__display.append(f"{name} : {self.__country_data[name]} ")
                     return
                 else:
-                    self.__error_disp.setText("Data for country not avaible, please select country first")
                     return
 
 
-        self.__error_disp.setText("out of bounds")
+        self.__error_disp.append("out of bounds")
 
 
 
