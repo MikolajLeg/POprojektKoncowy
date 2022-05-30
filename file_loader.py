@@ -1,17 +1,19 @@
 import os
 import sys
-#from Buttons import AddPatchButton
+
 from PyQt5.QtWidgets import QPushButton, QProgressBar, QFileDialog, QHBoxLayout
 
-from file_reader import Czytnik
+
 
 
 class FileLoader(QHBoxLayout):
 
-    def __init__(self, btn_name, okno):
+    def __init__(self, btn_name, error_display_method, set_filepath_method):
         super().__init__()
 
-        self.__okno = okno
+
+        self.__error_display_method = error_display_method
+        self.__set_filepath_method = set_filepath_method
         self.__create_all(btn_name)
 
     def __create_all(self, btn_name="Select file", parent=None):
@@ -41,12 +43,9 @@ class FileLoader(QHBoxLayout):
         if self.maybe_selected_file:
             self.__loader.setValue(50)
             self.__loader.setValue(100)
-            # auto_btn = AddPatchButton("autoprzycisk", self,  self.maybe_selected_file)
-            # auto_btn.clicked()
-            print(self.maybe_selected_file)
-            self.__okno.set_path(self.maybe_selected_file)
+            self.__set_filepath_method(self.maybe_selected_file)
             return self.maybe_selected_file
 
         else:
-            print("sth wrong???")
+            self.__error_display_method("Error: file loading aborted")
             self.__loader.setValue(1)

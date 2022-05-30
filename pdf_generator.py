@@ -1,12 +1,8 @@
 
-from PyQt5.QtWidgets import  QFileDialog, QApplication, QMainWindow ,QPushButton , QWidget, QVBoxLayout
-from datetime import date
+
 from reportlab.lib.utils import ImageReader
-from reportlab.lib.pagesizes import A4, letter
+from reportlab.lib.pagesizes import A4
 from reportlab.pdfgen.canvas import Canvas
-from reportlab.lib.units import inch
-from tabulate import tabulate
-from reportlab.platypus import  Table, TableStyle
 from file_reader import DataGrinder
 
 

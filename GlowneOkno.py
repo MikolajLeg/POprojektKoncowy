@@ -2,7 +2,7 @@ from Panstwo import CountryCreator
 from ListOfObjectsCreator import ListOfObjectsCreator
 from Wykres import ChartMaker
 from mapa import MapMaker
-from Buttons import CountryButton, ChoiceButton, ErrorDisplay, CountryDisplay, PdfSaveButton
+from buttons import CountryButton, ChoiceButton, ErrorDisplay, CountryDisplay, PdfSaveButton
 from PyQt5.QtWidgets import QMainWindow, QVBoxLayout, QGroupBox, QWidget, QGridLayout, QPushButton, QTabWidget, \
     QScrollArea
 from PyQt5.QtGui import QIcon
@@ -24,10 +24,10 @@ class MainWindow(QMainWindow):
         self.__inputer = None
         self.__start_date = None
         self.__end_date = None
-        self.__map_button = ChoiceButton("Mapa", self)
-        self.__chart_button = ChoiceButton("Wykres", self)
-        self.__file_loader = FileLoader("select file",self)
-        self.__pdf_button = PdfSaveButton("Create PDF")
+        self.__map_button = ChoiceButton("Mapa", self.set_view, self.get_view, self.refresh_view)
+        self.__chart_button = ChoiceButton("Wykres", self.set_view, self.get_view, self.refresh_view)
+        self.__file_loader = FileLoader("select file",self.__error_disp.append, self.set_path)
+        self.__pdf_button = PdfSaveButton("Create PDF",self.__error_disp.append)
 
         self.resize(1500, 1000)
         self.__init_view()
@@ -61,7 +61,7 @@ class MainWindow(QMainWindow):
         # ustala rozkład na wertykalny (kolejnye przyciski beda dodawne pod soba)
         self.tab2.layout = QVBoxLayout()
         for kraj in self.__list:
-            self.tab2.layout.addWidget(CountryButton(kraj, self))
+            self.tab2.layout.addWidget(CountryButton(kraj, self.refresh_view))
         groupbox = QGroupBox("Country list")
         groupbox.setLayout(self.tab2.layout)
         scroll = QScrollArea()
@@ -118,14 +118,13 @@ class MainWindow(QMainWindow):
 
         if self.__view == "Wykres":
             self.show_chart()
-            self.__pdf_button.update_chart(self.__chart, self.__start_date,self.__end_date, self.__short_list)
+            self.__pdf_button.update_pdf_data(self.__chart, self.__start_date, self.__end_date, self.__short_list)
         elif self.__view == "Mapa":
             self.show_map()
         else:
             self.tab1 = QWidget()
             self.tab1.setStyleSheet("border: 1px solid red")
             self.__chart = self.tab1
-
 
         self.__chart_button.check_color()
         self.__map_button.check_color()
@@ -142,7 +141,7 @@ class MainWindow(QMainWindow):
 
     def show_map(self):
         #self.__layout.removeWidget(self.__chart)
-        self.__chart = MapMaker(self.__short_list, self.__start_date, self.__end_date,self.__error_disp, self.__disp)
+        self.__chart = MapMaker(self.__list, self.__start_date, self.__end_date,self.__error_disp, self.__disp)
         # ustala że w głownym oknie będzie wyświetlany mapa
 
     def get_view(self):
@@ -159,7 +158,6 @@ class MainWindow(QMainWindow):
         self.__end_date = end_date
 
 
-
     def __change_data(self):
 
         NowyCzytnik = Czytnik()
@@ -168,5 +166,6 @@ class MainWindow(QMainWindow):
         self.__list = ListCreator.get_list()
         self.__slider = Slider(self, self.__list)
         self.start_view()
+
 
 

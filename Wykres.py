@@ -73,7 +73,7 @@ class ChartMaker(FigureCanvasQTAgg):
             count = count + 1
             if count > 6:
 
-                self.__disp.append("Error: Zbyt dużo zanaznaczonych państw, wyswietlanie tylko czesci")
+                self.__disp.append("Error: Too many selected countries, only six are displayed")
                 break
             Grinder = DataGrinder()
             dates, costs = Grinder.grind_data(self.__start_date,self.__end_date,kraj)

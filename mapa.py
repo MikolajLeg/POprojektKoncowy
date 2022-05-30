@@ -18,7 +18,7 @@ class MapMaker(FigureCanvasQTAgg):
         self.__min_price = None
         self.__error_disp = error_display
         self.__display = display
-        super().__init__(self.__fig,)
+        super().__init__(self.__fig)
 
         self.__init_map()
 
@@ -82,6 +82,7 @@ class MapMaker(FigureCanvasQTAgg):
                 num = 1
 
             avg_cost = country_costs/num
+            avg_cost = round(avg_cost,3)
             self.__price_check(avg_cost)
             self.__country_data[country.get_name()] = avg_cost
 
@@ -89,16 +90,17 @@ class MapMaker(FigureCanvasQTAgg):
     def __check_countries(self):
         T = Translator()
         for country in self.__list:
-            for nuts_name in self.__data.NAME_LATN:
-                if "/" in nuts_name:
-                    new_nuts_name = nuts_name.split("/")
-                    new_nuts_name = new_nuts_name[1]
-                else:
-                    new_nuts_name = nuts_name
+            if country.get_status():
+                for nuts_name in self.__data.NAME_LATN:
+                    if "/" in nuts_name:
+                        new_nuts_name = nuts_name.split("/")
+                        new_nuts_name = new_nuts_name[1]
+                    else:
+                        new_nuts_name = nuts_name
 
-                new_nuts_name = T.translate(new_nuts_name)
-                if new_nuts_name == country.get_name():
-                    self.__paint_country(nuts_name,new_nuts_name)
+                    new_nuts_name = T.translate(new_nuts_name)
+                    if new_nuts_name == country.get_name():
+                        self.__paint_country(nuts_name,new_nuts_name)
 
 
     def __paint_country(self, nuts_name, country_name):
