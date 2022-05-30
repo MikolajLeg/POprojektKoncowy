@@ -1,12 +1,12 @@
-from file_loader import FileLoader
-from PyQt5.QtWidgets import QPushButton, QLineEdit
 
+from PyQt5.QtWidgets import QPushButton, QLineEdit, QFileDialog
+from pdf_generator import PdfReportGenerator
 
 
 class CountryButton(QPushButton):
-    def __init__(self, Kraj, Okno):
-        super().__init__(Kraj.get_name())
-        self.__kraj = Kraj
+    def __init__(self, Country, Okno):
+        super().__init__(Country.get_name())
+        self.__kraj = Country
         self.__okno = Okno
         self.clicked.connect(self.__status)
         self.__check_color()
@@ -83,7 +83,6 @@ class Display(QLineEdit):
         self.setReadOnly(True)
 
 
-
 class CountryDisplay(Display):
     def __init__(self):
         super().__init__()
@@ -93,4 +92,26 @@ class ErrorDisplay(Display):
     def __init__(self):
         super().__init__()
         self.setStyleSheet("color: red")
+
+
+class PdfSaveButton(QPushButton):
+
+    def __init__(self, name):
+        super().__init__(name)
+        self.__pdf_generator = PdfReportGenerator()
+        self.__chart = None
+
+        self.clicked.connect(self.__save_btn_action)
+
+    def update_chart(self, chart):
+        self.__chart = chart
+
+    def __save_btn_action(self):
+        filename = self.__prepare_file_chooser()
+        self.__pdf_generator.create_and_save_pdf(filename, self.__chart)
+
+    def __prepare_file_chooser(self):
+        filename, _ = QFileDialog.getSaveFileName(self, "Save PDF report", filter="PDF ( *.pdf )")
+        print(filename)
+        return filename
 

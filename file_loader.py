@@ -3,7 +3,7 @@ import sys
 #from Buttons import AddPatchButton
 from PyQt5.QtWidgets import QPushButton, QProgressBar, QFileDialog, QHBoxLayout
 
-from file_chooser import Czytnik
+from file_reader import Czytnik
 
 
 class FileLoader(QHBoxLayout):
@@ -35,7 +35,7 @@ class FileLoader(QHBoxLayout):
         options = QFileDialog.DontUseNativeDialog
         self.__loader.setValue(20)
         self.maybe_selected_file, _ = QFileDialog.getOpenFileName(parent, "Choose csv file",
-                                                             current_dir, "CSV (*.csv);;All Files (*)",
+                                                             current_dir, "CSV (*.csv)",
                                                              options=options)
         self.__loader.setValue(40)
         if self.maybe_selected_file:
@@ -50,5 +50,3 @@ class FileLoader(QHBoxLayout):
         else:
             print("sth wrong???")
             self.__loader.setValue(1)
-
-

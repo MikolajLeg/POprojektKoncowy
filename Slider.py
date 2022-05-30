@@ -1,16 +1,24 @@
+
+
 from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import ( QGridLayout, QGroupBox,
-                             QVBoxLayout, QWidget, QSlider)
+from PyQt5.QtWidgets import (QGridLayout, QGroupBox, QVBoxLayout, QWidget, QSlider)
+
+
 
 class Slider(QWidget):
-    def __init__(self,Okno, lista):
+    def __init__(self, window, countries):
         super().__init__()
 
-        if len(lista) == 0:
+        # We check if list of the provided countries is not empty, if it is we abort creating slider for now
+        if len(countries) == 0:
             pass
+        # if it is not empty we commence with creation of slider
         else:
-            self.__okno = Okno
-            data_1 = lista[1].get_dates_and_cost()
+            # we set provided window to self.__window -> this will allow us to send feedback
+            # signals to main window afterwards
+            self.__window = window
+            # we prepare a base list of dates which will allow us to "translate" positions of sliders indexes into dates
+            data_1 = countries[1].get_dates_and_cost()
             data = list()
             for date in data_1.keys():
                 data.append(date)
@@ -65,10 +73,10 @@ class Slider(QWidget):
 
 
     def __set_start_date(self):
-        self.__okno.set_start_date(self.dates[self.slider_1.sliderPosition()])
-        self.__okno.refresh_view()
+        self.__window.set_start_date(self.dates[self.slider_1.sliderPosition()])
+        self.__window.refresh_view()
 
     def __set_end_date(self):
-        self.__okno.set_end_date(self.dates[self.slider_2.sliderPosition()])
-        self.__okno.refresh_view()
+        self.__window.set_end_date(self.dates[self.slider_2.sliderPosition()])
+        self.__window.refresh_view()
 

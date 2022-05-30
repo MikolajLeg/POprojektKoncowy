@@ -90,7 +90,7 @@ class MapApp(QMainWindow):
 
 if __name__ == "__main__":
     app = QApplication([])
-    path_to_data = "./NUTS_RG_60M_2021_3857_LEVL_0.geojson"
+    path_to_data = "MapaPlik.geojson"
 
     mapApp = MapApp(path_to_data)
 

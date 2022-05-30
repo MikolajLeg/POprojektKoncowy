@@ -2,11 +2,12 @@ from Panstwo import CountryCreator
 from ListOfObjectsCreator import ListOfObjectsCreator
 from Wykres import ChartMaker
 from mapa import MapMaker
-from Buttons import CountryButton, ChoiceButton, PathButton, AddPatchButton, ErrorDisplay, CountryDisplay
-from PyQt5.QtWidgets import QMainWindow, QVBoxLayout, QGroupBox, QWidget, QGridLayout, QPushButton, QTabWidget, QScrollArea, QTextEdit
-from file_chooser import Czytnik
-from Slider import Slider
+from Buttons import CountryButton, ChoiceButton, ErrorDisplay, CountryDisplay, PdfSaveButton
+from PyQt5.QtWidgets import QMainWindow, QVBoxLayout, QGroupBox, QWidget, QGridLayout, QPushButton, QTabWidget, \
+    QScrollArea
 from PyQt5.QtGui import QIcon
+from file_reader import Czytnik
+from Slider import Slider
 from file_loader import FileLoader
 
 
@@ -25,21 +26,8 @@ class MainWindow(QMainWindow):
         self.__end_date = None
         self.__map_button = ChoiceButton("Mapa", self)
         self.__chart_button = ChoiceButton("Wykres", self)
-        file_loader_name = "Select file"
-        self.__file_loader = FileLoader(file_loader_name, self)
-
-        # self.groupbox_error = QGroupBox("ERROR BAR")
-        # self.groupbox_error.setLayout(self.__error_disp.layout)
-        # scroll = QScrollArea()
-        # scroll.setWidget(self.groupbox_error)
-        # scroll.setWidgetResizable(True)
-        # error_layout = QVBoxLayout()
-        # error_layout.addWidget(scroll)
-        # self.__error_disp.setLayout(error_layout)
-        #
-
-
-
+        self.__file_loader = FileLoader("select file",self)
+        self.__pdf_button = PdfSaveButton("Create PDF")
 
         self.resize(1500, 1000)
         self.__init_view()
@@ -49,8 +37,7 @@ class MainWindow(QMainWindow):
     def __init_view(self):
 
         self.setWindowTitle("Aplikacja")
-        icon = QIcon('img.png')
-        self.setWindowIcon(icon)
+        self.setWindowIcon(QIcon('oip_eZL_icon.ico'))
         self.__layout = QGridLayout()
         # ustala Group boxa ktory pozwala na wyswietlenie dodatkowych ramek/pol/wykresow wewnątrz
         group_box = QGroupBox()
@@ -107,7 +94,8 @@ class MainWindow(QMainWindow):
              self.__chart = self.tab1
 
          # "wstawia" wykres do wnetrza okna, oraz ustala widok glownego okna
-         self.__layout.addWidget(self.__error_disp, 16, 2, 1, 10)
+         self.__layout.addWidget(self.__error_disp, 16, 0, 1, 10)
+         self.__layout.addWidget(self.__disp,16,10,1,10)
          self.__layout.addWidget(self.__chart, 2, 0, 14, 22)
          self.__layout.addWidget(self.tab2, 2, 22, 16, 6)
          self.__layout.addWidget(self.__map_button, 0, 0, 2, 10)
@@ -115,10 +103,9 @@ class MainWindow(QMainWindow):
          # self.__inputer = PathButton()
          # self.__layout.addWidget(self.__inputer, 0, 20, 2, 6)
          # self.__layout.addWidget(AddPatchButton("Dodaj Plik", self, self.__inputer), 0, 26, 2, 2)
-         self.__layout.addLayout(self.__file_loader, 0, 20, 2, 8)
-         self.__layout.addWidget(QPushButton("Daty"), 17, 0, 1, 2)
-         self.__layout.addWidget(self.__slider, 17, 2, 2, 18)
-         # self.__layout.addWidget(self.pdf_btn, 17, 20, 1, 2)
+         self.__layout.addLayout(self.__file_loader,0,20,2,8)
+         self.__layout.addWidget(self.__slider, 17, 0, 2, 18)
+         self.__layout.addWidget(self.__pdf_button, 17, 20, 1, 2)
 
 
     def refresh_view(self):
@@ -131,12 +118,14 @@ class MainWindow(QMainWindow):
 
         if self.__view == "Wykres":
             self.show_chart()
+            self.__pdf_button.update_chart(self.__chart)
         elif self.__view == "Mapa":
             self.show_map()
         else:
             self.tab1 = QWidget()
             self.tab1.setStyleSheet("border: 1px solid red")
             self.__chart = self.tab1
+
 
         self.__chart_button.check_color()
         self.__map_button.check_color()
@@ -153,7 +142,7 @@ class MainWindow(QMainWindow):
 
     def show_map(self):
         #self.__layout.removeWidget(self.__chart)
-        self.__chart = MapMaker(self.__short_list, self.__start_date, self.__end_date,)
+        self.__chart = MapMaker(self.__short_list, self.__start_date, self.__end_date,self.__error_disp, self.__disp)
         # ustala że w głownym oknie będzie wyświetlany mapa
 
     def get_view(self):
@@ -169,23 +158,15 @@ class MainWindow(QMainWindow):
     def set_end_date(self,end_date):
         self.__end_date = end_date
 
-    def __prepare_pdf_gen_button(self):
-        self.pdf_btn = PdfSaveButton("Save as PDF", self.__chart)
-        return self.pdf_btn
-
 
 
     def __change_data(self):
+
         NowyCzytnik = Czytnik()
         dane = NowyCzytnik.read_file(self.__sciezka)
-        ListCreator = ListOfObjectsCreator(dane, CountryCreator())
+        ListCreator = ListOfObjectsCreator(dane,CountryCreator())
         self.__list = ListCreator.get_list()
         self.__slider = Slider(self, self.__list)
         self.start_view()
-
-
-
-
-
 
 
