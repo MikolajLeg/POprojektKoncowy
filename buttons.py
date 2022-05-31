@@ -63,7 +63,7 @@ class Display(QTextEdit):
         self.setReadOnly(True)
         self.LineWrapMode()
         self.adjustSize()
-        self.setMaximumSize(525, 40)
+        self.setMaximumSize(575, 40)
 
 
 class CountryDisplay(Display):
@@ -103,7 +103,7 @@ class PdfSaveButton(QPushButton):
     # creates pdf with stored data, and saves it in chosen directory
     def __save_btn_action(self):
         filename = self.__prepare_file_chooser()
-        # checks if directory, pdf have to be saved to, have been chosen
+        # checks if directory, pdf will be saved to, have been chosen
         if filename:
             self.__pdf_generator.create_and_save_pdf(filename, self.__chart, self.__start_date,
                                                      self.__end_date, self.__data)
@@ -111,7 +111,7 @@ class PdfSaveButton(QPushButton):
             self.__error_method("Save as PDF status: aborted")
             return
 
-    # enables choice of directory pdf have to be saved to
+    # enables choice of directory pdf will be saved to
     def __prepare_file_chooser(self):
         filename, _ = QFileDialog.getSaveFileName(self, "Save PDF report", filter="PDF ( *.pdf )")
 

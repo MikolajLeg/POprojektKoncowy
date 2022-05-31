@@ -148,8 +148,12 @@ class MapMaker(FigureCanvasQTAgg):
                     name = name.split("/")
                     name = name[1]
                 name = T.translate(name)
+                print(name)
                 if name in self.__country_data.keys():
                     self.__display.append(f"{name} : {self.__country_data[name]} ")
+                    return
+                elif name == "Switzerland":
+                    self.__error_disp.append("It's not a bug, it's a feature")
                     return
                 else:
                     return

@@ -1,6 +1,6 @@
 
 
-from GlowneOkno import MainWindow
+from main_window import MainWindow
 from PyQt5.QtWidgets import QApplication
 
 
