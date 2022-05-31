@@ -23,15 +23,14 @@ class MainWindow(QMainWindow):
         self.__view = "None"
         self.__Creator = CountryCreator()
         self.__slider = None
-        self.__inputer = None
         self.__start_date = None
         self.__end_date = None
         self.__tab1 = None
         self.__tab2 = None
         self.__chart = None
         self.__filepath = None
-        self.__map_button = ChoiceButton("Mapa", self.set_view, self.get_view, self.refresh_view)
-        self.__chart_button = ChoiceButton("Wykres", self.set_view, self.get_view, self.refresh_view)
+        self.__map_button = ChoiceButton("Map", self.set_view, self.get_view, self.refresh_view)
+        self.__chart_button = ChoiceButton("Chart", self.set_view, self.get_view, self.refresh_view)
         self.__file_loader = FileLoader("select file", self.__error_disp.append, self.set_path)
         self.__pdf_button = PdfSaveButton("Create PDF", self.__error_disp.append)
 
@@ -42,10 +41,10 @@ class MainWindow(QMainWindow):
     def __init_view(self):
 
         self.resize(1500, 1000)
-        self.setWindowTitle("Aplikacja")
+        self.setWindowTitle("Application")
         self.setWindowIcon(QIcon('oip_eZL_icon.ico'))
         self.__layout = QGridLayout()
-        # creats group box which allows for putting extra widgets/Labels/Layouts inside
+        # creates group box which allows for putting extra widgets/Labels/Layouts inside
         group_box = QGroupBox()
         group_box.setLayout(self.__layout)
         # sets group box as central widget of Main Window
@@ -57,8 +56,8 @@ class MainWindow(QMainWindow):
         self.__tab2 = QWidget()
         # sets vertical layout (new buttons will be added under previous ones)
         self.__tab2.layout = QVBoxLayout()
-        for kraj in self.__list:
-            self.__tab2.layout.addWidget(CountryButton(kraj, self.refresh_view))
+        for country in self.__list:
+            self.__tab2.layout.addWidget(CountryButton(country, self.refresh_view))
         groupbox = QGroupBox("Country list")
         groupbox.setLayout(self.__tab2.layout)
 
@@ -98,15 +97,15 @@ class MainWindow(QMainWindow):
         self.__prep_lista()
         self.__short_list.clear()
 
-        for kraj in self.__list:
-            if kraj.get_status():
-                self.__short_list.append(kraj)
+        for country in self.__list:
+            if country.get_status():
+                self.__short_list.append(country)
 
         # checks whether map or chart is chosen and puts the correct one inside main_window chart field
-        if self.__view == "Wykres":
+        if self.__view == "Chart":
             self.show_chart()
             self.__pdf_button.update_pdf_data(self.__chart, self.__start_date, self.__end_date, self.__short_list)
-        elif self.__view == "Mapa":
+        elif self.__view == "Map":
             self.show_map()
 
         # sets correct color for map/chart button and refreshes displayed chart/map
@@ -114,41 +113,40 @@ class MainWindow(QMainWindow):
         self.__map_button.check_color()
         self.__layout.addWidget(self.__chart, 2, 0, 14, 22)
 
-    # eneables switching between displaying map/chart
-    def set_view(self, nazwa):
-        self.__view = nazwa
+    # enables switching between displaying map/chart
+    def set_view(self, name):
+        self.__view = name
 
     # sets chart as the one to be displayed in main window
     def show_chart(self):
         self.__chart = ChartMaker(self.__short_list, self.__start_date, self.__end_date, self.__error_disp)
 
+    # sets map as the one to be displayed in main window
     def show_map(self):
-        #self.__layout.removeWidget(self.__chart)
-        self.__chart = MapMaker(self.__list, self.__start_date, self.__end_date,self.__error_disp, self.__disp)
-        # ustala że w głownym oknie będzie wyświetlany mapa
+        self.__chart = MapMaker(self.__list, self.__start_date, self.__end_date, self.__error_disp, self.__disp)
 
+    # returns what is actually displayed
     def get_view(self):
         return self.__view
 
-    def set_path(self, sciezka):
-        self.__filepath = sciezka
+    # sets path to file with data
+    def set_path(self, filepath):
+        self.__filepath = filepath
         self.__change_data()
 
-    def set_start_date(self,start_date):
+    def set_start_date(self, start_date):
         self.__start_date = start_date
 
-    def set_end_date(self,end_date):
+    def set_end_date(self, end_date):
         self.__end_date = end_date
 
-
+    # reads and return new data after new path to file have been set
     def __change_data(self):
 
-        NowyCzytnik = FileReader(self.__file_loader.set)
-        dane = NowyCzytnik.read_file(self.__filepath)
-        ListCreator = ListOfObjectsCreator(dane,CountryCreator())
-        self.__list = ListCreator.get_list()
+        new_reader = FileReader(self.__file_loader.set)
+        dane = new_reader.read_file(self.__filepath)
+        # creates list of country objects
+        list_creator = ListOfObjectsCreator(dane, CountryCreator())
+        self.__list = list_creator.get_list()
         self.__slider = Slider(self, self.__list)
         self.__start_view()
-
-
-
