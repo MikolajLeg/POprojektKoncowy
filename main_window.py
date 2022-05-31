@@ -1,14 +1,14 @@
 
 
-from Panstwo import CountryCreator
-from ListOfObjectsCreator import ListOfObjectsCreator
-from Wykres import ChartMaker
-from mapa import MapMaker
+from country import CountryCreator
+from list_of_objects_creator import ListOfObjectsCreator
+from chart import ChartMaker
+from map import MapMaker
 from buttons import CountryButton, ChoiceButton, ErrorDisplay, CountryDisplay, PdfSaveButton
 from PyQt5.QtWidgets import QMainWindow, QVBoxLayout, QGroupBox, QWidget, QGridLayout, QScrollArea
 from PyQt5.QtGui import QIcon
 from file_reader import FileReader
-from Slider import Slider
+from slider import Slider
 from file_loader import FileLoader
 
 
@@ -41,7 +41,7 @@ class MainWindow(QMainWindow):
     def __init_view(self):
 
         self.resize(1500, 1000)
-        self.setWindowTitle("Application")
+        self.setWindowTitle("Charting Program")
         self.setWindowIcon(QIcon('oip_eZL_icon.ico'))
         self.__layout = QGridLayout()
         # creates group box which allows for putting extra widgets/Labels/Layouts inside
@@ -148,5 +148,5 @@ class MainWindow(QMainWindow):
         # creates list of country objects
         list_creator = ListOfObjectsCreator(dane, CountryCreator())
         self.__list = list_creator.get_list()
-        self.__slider = Slider(self, self.__list)
+        self.__slider = Slider(self.refresh_view, self.set_start_date, self.set_end_date, self.__list)
         self.__start_view()

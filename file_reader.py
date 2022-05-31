@@ -93,7 +93,6 @@ class DataGrinder:
                 if cost == 'no data':
                     self.__dates.append(date)
                     self.__costs.append(None)
-                    continue
                 else:
                     self.__dates.append(date)
                     self.__costs.append(cost)
@@ -101,5 +100,4 @@ class DataGrinder:
             # ends appending dates/costs after end date is reached
             if date == end_date:
                 self.__check = not self.__check
-
         return self.__dates, self.__costs

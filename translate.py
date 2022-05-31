@@ -1,4 +1,6 @@
 
+
+# class responsible for translating country names found in NUTS file to english
 class Translator:
     def __init__(self):
         pass
@@ -94,7 +96,3 @@ class Translator:
         else:
             name = name
             return name
-
-
-
-
