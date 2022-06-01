@@ -61,7 +61,7 @@ class ChartMaker(FigureCanvasQTAgg):
     def __make_chart(self):
         ax = self.__fig.axes[0]
 
-        for country in self.__all_dates.keys():
+        for country in self.__all_costs.keys():
             ax.plot(self.__dates, self.__all_costs[country], "--*")
         self.__minimum = self.__minimum.__round__(2)
         self.__maximum = self.__maximum.__round__(2)
