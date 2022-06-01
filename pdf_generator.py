@@ -16,12 +16,12 @@ class PdfReportGenerator:
         self.__dictionary = dict()
 
 
-    def create_and_save_pdf(self,filepath, chart, start_date, end_date, countries, pagesize=A4):
+    def create_and_save_pdf(self, filepath,chart, start_date, end_date, countries, pagesize=A4):
         pdf_template = self.__create_pdf_template(filepath, chart, start_date, end_date, countries, pagesize)
         pdf_template.setTitle(self.__title)
         pdf_template.save()
 
-    def __create_pdf_template(self, filepath, chart,start_date,end_date, countries, pagesize):
+    def __create_pdf_template(self, filepath, chart, start_date, end_date, countries, pagesize):
 
         self.__get_data(start_date, end_date, countries)
         img = self.__turn_chart_to_img(chart)

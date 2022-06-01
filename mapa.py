@@ -25,7 +25,7 @@ class MapMaker(FigureCanvasQTAgg):
     def __init_map(self):
         self.__fig.suptitle(f"Ceny energii dla państw Europy w latach {self.__start_date} - {self.__end_date}")
         self.__ax = self.__fig.add_subplot(111)
-        self.__data = gpd.read_file("NUTS_RG_60M_2021_3857_LEVL_0.geojson")
+        self.__data = gpd.read_file("C:/Users/jeste/PycharmProjects/PROJWYK/POprojektKoncowy/NUTS_AT_2021.csv")
 
         self.__make_map()
         self.__add_mouse_listener()

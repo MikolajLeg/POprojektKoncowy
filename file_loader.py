@@ -37,8 +37,7 @@ class FileLoader(QHBoxLayout):
         options = QFileDialog.DontUseNativeDialog
         self.__loader.setValue(20)
         self.maybe_selected_file, _ = QFileDialog.getOpenFileName(parent, "Choose csv file",
-                                                             current_dir, "CSV (*.csv)",
-                                                             options=options)
+                                                             current_dir, "CSV (*.csv)", options=options)
         self.__loader.setValue(40)
         if self.maybe_selected_file:
             self.__loader.setValue(50)
@@ -46,6 +45,8 @@ class FileLoader(QHBoxLayout):
             self.__set_filepath_method(self.maybe_selected_file)
             return self.maybe_selected_file
 
+
         else:
             self.__error_display_method("Error: file loading aborted")
             self.__loader.setValue(1)
+
