@@ -103,6 +103,13 @@ class PdfSaveButton(QPushButton):
     # creates pdf with stored data, and saves it in chosen directory
     def __save_btn_action(self):
         filename = self.__prepare_file_chooser()
+        if not self.__chart:
+            self.__error_method("Save as PDF status: aborted")
+            return
+        if not self.__data:
+            self.__error_method("Save as PDF status: aborted")
+            return
+
         # checks if directory, pdf will be saved to, have been chosen
         if filename:
             self.__pdf_generator.create_and_save_pdf(filename, self.__chart, self.__start_date,

@@ -71,7 +71,6 @@ class PdfReportGenerator:
                     text_object.setFont("Times-Roman", 20)
 
         canvas.drawText(text_object)
-
         return canvas
 
     def __turn_chart_to_img(self, chart):
